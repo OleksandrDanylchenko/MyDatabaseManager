@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "dbReading.h"
+#include "dbRead.h"
 #include "dbDeletion.h"
+#include "dbUpdate.h"
+#include "dbInsert.h"
 
 unsigned int getOption();
 
@@ -13,19 +15,19 @@ int main() {
                 break;
             case 2: getS();
                 break;
-            case 3:
+            case 3: delM();
                 break;
-            case 4:
+            case 4: delS();
                 break;
-            case 5:
+            case 5: updateM();
                 break;
-            case 6:
+            case 6: updateS();
                 break;
-            case 7:
+            case 7: insertM();
                 break;
-            case 8:
+            case 8: insertS();
                 break;
-            case 9:
+            case 9: getAll();
                 break;
             case 10:
                 return 0;

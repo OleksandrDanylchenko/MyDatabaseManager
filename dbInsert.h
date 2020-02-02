@@ -1,12 +1,20 @@
 #ifndef DATABASES_DBINSERT_H
 #define DATABASES_DBINSERT_H
 
+#include <stdbool.h>
 #include "dbFilesHandler.h"
+#include "dbStructures.h"
 
 void insertM();
 
 void insertS();
 
-void validateRecordsAmount(dbFiles fileType);
+bool validateRecordsAmount(dbFiles fileType);
+
+shop getNewShop();
+
+void insertInDataFile(dbFiles fileType);
+
+void insertInIndicesFile(dbFiles fileType);
 
 #endif //DATABASES_DBINSERT_H

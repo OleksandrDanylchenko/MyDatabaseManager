@@ -6,6 +6,7 @@
 typedef struct shop {
     int id;
     char *address;
+    bool isActive
 } shop;
 
 typedef struct employee {
@@ -14,6 +15,7 @@ typedef struct employee {
     char *post;
     char *FirstName;
     char *LastName;
+    bool isActive;
 } employee;
 
 typedef struct keyIndex {

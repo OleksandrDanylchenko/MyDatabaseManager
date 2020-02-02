@@ -4,10 +4,10 @@
 #define MAX_AMOUNT 20
 
 typedef struct shop {
-    int id;
-    char *address;
+    int id; char *address;
     bool isActive;
 } shop;
+
 
 typedef struct employee {
     int id;

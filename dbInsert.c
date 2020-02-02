@@ -30,7 +30,7 @@ void insertS() {
 bool validateRecordsAmount(dbFiles fileType) {
     const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl", "Employees.ind"};
     if (getRecordsAmount(fileType) >= MAX_AMOUNT) {
-        fprintf(stderr, "%s cannot store more than 20 records!", fileNames[fileType]);
+        fprintf(stderr, "\n%s cannot store more than 20 records!\n", fileNames[fileType]);
         return false;
     }
     return true;

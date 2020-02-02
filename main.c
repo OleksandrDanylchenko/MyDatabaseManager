@@ -11,23 +11,32 @@ int main() {
     while (true) {
         unsigned int userOpt = getOption();
         switch (userOpt) {
-            case 1: getM();
+            case 1:
+                getM();
                 break;
-            case 2: getS();
+            case 2:
+                getS();
                 break;
-            case 3: delM();
+            case 3:
+                delM();
                 break;
-            case 4: delS();
+            case 4:
+                delS();
                 break;
-            case 5: updateM();
+            case 5:
+                updateM();
                 break;
-            case 6: updateS();
+            case 6:
+                updateS();
                 break;
-            case 7: insertM();
+            case 7:
+                insertM();
                 break;
-            case 8: insertS();
+            case 8:
+                insertS();
                 break;
-            case 9: getAll();
+            case 9:
+                getAll();
                 break;
             case 10:
                 return 0;

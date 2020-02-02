@@ -18,6 +18,7 @@ void insertM() {
     fwrite(&newShopIndex.key, sizeof(int), 1, outputFile);
     fseek(outputFile, (long) newShopIndex.address, SEEK_SET);
     fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
+    fclose(outputFile);
 }
 
 // TODO
@@ -27,7 +28,8 @@ void insertS() {
 }
 
 bool validateRecordsAmount(dbFiles fileType) {
-    if (getRecordsAmount(fileType) >= 20) {
+    const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl", "Employees.ind"};
+    if (getRecordsAmount(fileType) >= MAX_AMOUNT) {
         fprintf(stderr, "%s cannot store more than 20 records!", fileNames[fileType]);
         return false;
     }

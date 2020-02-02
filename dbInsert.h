@@ -11,7 +11,8 @@ void insertS();
 
 bool validateRecordsAmount(dbFiles fileType);
 
-shop getNewShop();
+shop getNewShopRecord();
 
+keyIndex getNewShopIndex();
 
 #endif //DATABASES_DBINSERT_H

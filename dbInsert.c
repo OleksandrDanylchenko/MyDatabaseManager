@@ -1,19 +1,23 @@
+#include <stdlib.h>
 #include "dbInsert.h"
 
 // TODO
 void insertM() {
     if (!validateRecordsAmount(shopsIndices))
         return;
-    shop newShop = getNewShop();
+    shop newShop = getNewShopRecord();
 
     FILE *outputFile = NULL;
     openDbFile(&outputFile, shopsData);
     fwrite(&newShop, sizeof(shop), 1, outputFile);
+    free(newShop.address);
     fclose(outputFile);
 
-    int newRecordNumber = getRecordsAmount();
+    keyIndex newShopIndex = getNewShopIndex();
     openDbFile(&outputFile, shopsIndices);
-
+    fwrite(&newShopIndex.key, sizeof(int), 1, outputFile);
+    fseek(outputFile, (long) newShopIndex.address, SEEK_SET);
+    fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
 }
 
 // TODO
@@ -30,13 +34,21 @@ bool validateRecordsAmount(dbFiles fileType) {
     return true;
 }
 
-shop getNewShop() {
+shop getNewShopRecord() {
     shop newShop;
-    newShop.id = getRecordsAmount(shopsIndices) + 1;
+    newShop.id = getRecordsAmount(shopsData) + 1;
     printf("New address: ");
     newShop.address = calloc(150, sizeof(char));
     gets(newShop.address);
     return newShop;
+}
+
+keyIndex getNewShopIndex() {
+    keyIndex newShopIndex = {
+            .key = getRecordsAmount(shopsData) + 1,
+            .address = (getRecordsAmount(shopsData) + 1) * sizeof(shop)
+    };
+    return newShopIndex;
 }
 
 void insertInIndicesFile(dbFiles fileType) {

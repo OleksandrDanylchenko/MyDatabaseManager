@@ -6,7 +6,7 @@
 typedef struct shop {
     int id;
     char *address;
-    bool isActive
+    bool isActive;
 } shop;
 
 typedef struct employee {
@@ -20,7 +20,7 @@ typedef struct employee {
 
 typedef struct keyIndex {
     int key;
-    long index;
+    unsigned long address;
 } keyIndex;
 
 #endif //DATABASES_DBSTRUCTURES_H

@@ -1,17 +1,24 @@
 #ifndef DATABASES_DBSTRUCTURES_H
 #define DATABASES_DBSTRUCTURES_H
 
-typedef struct tag_shop {
+#define MAX_AMOUNT 20
+
+typedef struct shop {
     int id;
     char *address;
-} tShop;
+} shop;
 
-typedef struct tag_employees {
+typedef struct employee {
     int id;
     int shopId;
     char *post;
     char *FirstName;
     char *LastName;
-} tEmployees;
+} employee;
+
+typedef struct keyIndex {
+    int key;
+    long index;
+} keyIndex;
 
 #endif //DATABASES_DBSTRUCTURES_H

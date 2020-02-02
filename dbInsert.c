@@ -4,7 +4,10 @@
 
 // TODO
 void insertM() {
-
+    FILE *shopData;
+    openShopsDataFile(&shopData);
+    FILE *shopIndices;
+    openShopsIndicesFile(&shopIndices);
 }
 
 // TODO

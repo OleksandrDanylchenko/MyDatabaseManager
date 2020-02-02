@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include "dbInsert.h"
 
-// TODO
 void insertM() {
     if (!validateRecordsAmount(shopsIndices))
         return;
     shop newShop = getNewShopRecord();
 
     FILE *outputFile = NULL;
+
     openDbFile(&outputFile, shopsData);
     fwrite(&newShop, sizeof(shop), 1, outputFile);
     free(newShop.address);
@@ -39,8 +39,10 @@ bool validateRecordsAmount(dbFiles fileType) {
 shop getNewShopRecord() {
     shop newShop;
     newShop.id = getRecordsAmount(shopsData) + 1;
+    newShop.isActive = true;
     printf("New address: ");
     newShop.address = calloc(150, sizeof(char));
+    fflush(stdin);
     gets(newShop.address);
     return newShop;
 }
@@ -51,8 +53,4 @@ keyIndex getNewShopIndex() {
             .address = (getRecordsAmount(shopsData) + 1) * sizeof(shop)
     };
     return newShopIndex;
-}
-
-void insertInIndicesFile(dbFiles fileType) {
-
 }

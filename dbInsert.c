@@ -1,16 +1,24 @@
 #include <stdio.h>
 #include "dbInsert.h"
-#include "filesHandler.h"
+#include "dbFilesHandler.h"
 
 // TODO
 void insertM() {
-    FILE *shopData;
-    openShopsDataFile(&shopData);
-    FILE *shopIndices;
-    openShopsIndicesFile(&shopIndices);
+    if(getIndicesAmount(shopsIndices) >= 20) {
+        fprintf(stderr, "ShopData file cannot store more than 20 records!");
+        return;
+    }
+
 }
 
 // TODO
 void insertS() {
 
+}
+
+void validateRecordsAmount(dbFiles fileType) {
+    if(getIndicesAmount(fileType) >= 20) {
+        fprintf(stderr, "ShopData file cannot store more than 20 records!");
+        return;
+    }
 }

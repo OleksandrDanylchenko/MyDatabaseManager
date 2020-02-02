@@ -13,8 +13,5 @@ bool validateRecordsAmount(dbFiles fileType);
 
 shop getNewShop();
 
-void insertInDataFile(dbFiles fileType);
-
-void insertInIndicesFile(dbFiles fileType);
 
 #endif //DATABASES_DBINSERT_H

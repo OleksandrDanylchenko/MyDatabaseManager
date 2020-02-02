@@ -13,9 +13,13 @@ void openDbFile(FILE **file, dbFiles fileType) {
     *file = fopen(path, "r+");
 }
 
-int getIndicesAmount(dbFiles fileType) {
+int getRecordsAmount(dbFiles fileType) {
     FILE *indicesFile = NULL;
-    openDbFile(&indicesFile, fileType);
+    if (fileType == shopsData || fileType == shopsIndices)
+        openDbFile(&indicesFile, shopsIndices);
+    else
+        openDbFile(&indicesFile, employeesIndices);
+
     int amount = 0;
     fread(&amount, sizeof(int), 1, indicesFile);
     fclose(indicesFile);

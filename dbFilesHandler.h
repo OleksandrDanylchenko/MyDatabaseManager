@@ -13,6 +13,6 @@ typedef enum dbFiles {
 const char* fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl", "Employees.ind"};
 
 void openDbFile(FILE **file, dbFiles fileType);
-int getIndicesAmount(dbFiles fileType);
+int getRecordsAmount(dbFiles fileType);
 
 #endif //DATABASES_FILESHANDLER_H

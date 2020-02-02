@@ -4,10 +4,6 @@
 
 // TODO
 void insertM() {
-    if(getIndicesAmount(shopsIndices) >= 20) {
-        fprintf(stderr, "ShopData file cannot store more than 20 records!");
-        return;
-    }
 
 }
 
@@ -18,7 +14,7 @@ void insertS() {
 
 void validateRecordsAmount(dbFiles fileType) {
     if(getIndicesAmount(fileType) >= 20) {
-        fprintf(stderr, "ShopData file cannot store more than 20 records!");
+        fprintf(stderr, "%s cannot store more than 20 records!", fileNames[fileType]);
         return;
     }
 }

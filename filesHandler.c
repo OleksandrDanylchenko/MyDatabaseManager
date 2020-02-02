@@ -1,21 +1,25 @@
 #include "filesHandler.h"
 
-void openShopsDataFile(FILE *file) {
+void openShopsDataFile(FILE **file) {
     char *shopDataPath = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Shops.fl";
-    fopen(shopDataPath, "w+");
+    openFile(file, shopDataPath);
 }
 
-void openShopsIndicesFile(FILE *file) {
+void openShopsIndicesFile(FILE **file) {
     char *shopIndicesPath = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Shops.ind";
-    fopen(shopIndicesPath, "w+");
+    openFile(file, shopIndicesPath);
 }
 
-void openEmployeesDataFile(FILE *file) {
-    char *shopDataPath = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.fl";
-    fopen(shopDataPath, "w+");
+void openEmployeesDataFile(FILE **file) {
+    char *employeeDataPath = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.fl";
+    openFile(file, employeeDataPath);
 }
 
-void openEmployeesIndicesFile(FILE *file) {
+void openEmployeesIndicesFile(FILE **file) {
     char *employeeIndicesPath = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.ind";
-    fopen(employeeIndicesPath, "w+");
+    openFile(file, employeeIndicesPath);
+}
+
+void openFile(FILE **file, char* path) {
+    *file = fopen(path, "r+");
 }

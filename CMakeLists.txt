@@ -3,4 +3,4 @@ project(DataBases C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(DataBases main.c dbRead.c dbRead.h dbStructures.h filesHandler.c filesHandler.h dbDeletion.c dbDeletion.h dbUpdate.c dbUpdate.h dbInsert.cpp dbInsert.h)
+add_executable(DataBases main.c dbRead.c dbRead.h dbStructures.h filesHandler.c filesHandler.h dbDeletion.c dbDeletion.h dbUpdate.c dbUpdate.h dbInsert.h dbInsert.c)

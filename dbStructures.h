@@ -3,13 +3,14 @@
 
 #define MAX_AMOUNT 20
 
+#pragma pack(1)
 typedef struct shop {
     int id;
-    char address[100];
+    char address[70];
     bool isActive;
 } shop;
 
-
+#pragma pack(1)
 typedef struct employee {
     int id;
     int shopId;
@@ -19,6 +20,7 @@ typedef struct employee {
     bool isActive;
 } employee;
 
+#pragma pack(1)
 typedef struct keyIndex {
     int key;
     unsigned long address;

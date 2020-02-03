@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#pragma pack(1)
 #include "dbRead.h"
 #include "dbStructures.h"
 #include "dbFilesHandler.h"
 
-// TODO
 void getM() {
     int recordsNum = getRecordsAmount(shopsData);
     keyIndex indices[recordsNum];
@@ -17,7 +17,7 @@ void getM() {
         fprintf(stderr, "\nCannot find record in Shop.fl\n");
         return;
     }
-    printf("Id: %d \n Address: %s", foundedShop.id, foundedShop.address);
+    printf("\nId: %d\nAddress: %s\n\n", foundedShop.id, foundedShop.address);
 }
 
 // TODO
@@ -43,7 +43,7 @@ bool readIndices(keyIndex indices[], int size) {
     openDbFile(&shopIndicesFile, shopsIndices);
 
     fseek(shopIndicesFile, sizeof(int), SEEK_SET);
-    unsigned int readKeysNum = fread(indices, sizeof(keyIndex), size, shopIndicesFile);
+    unsigned int readKeysNum = fread(indices, sizeof(keyIndex), MAX_AMOUNT, shopIndicesFile);
     fclose(shopIndicesFile);
     if (size != readKeysNum) {
         fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");

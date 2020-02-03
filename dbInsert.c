@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#pragma pack(1)
 #include "dbInsert.h"
 
 void insertM() {
@@ -6,12 +7,10 @@ void insertM() {
         return;
 
     shop newShop = getNewShopRecord();
-
     FILE *outputFile = NULL;
     openDbFile(&outputFile, shopsData);
     fseek(outputFile, 0L, SEEK_END);
     fwrite(&newShop, sizeof(shop), 1, outputFile);
-    free(newShop.address);
     fclose(outputFile);
 
     keyIndex newShopIndex = getNewShopIndex();
@@ -41,17 +40,17 @@ bool validateRecordsAmount(dbFiles fileType) {
 shop getNewShopRecord() {
     shop newShop;
     newShop.id = getRecordsAmount(shopsData) + 1;
-    newShop.isActive = true;
     printf("New address: ");
     fflush(stdin);
     gets(newShop.address);
+    newShop.isActive = true;
     return newShop;
 }
 
 keyIndex getNewShopIndex() {
     keyIndex newShopIndex = {
-            .key = getRecordsAmount(shopsData),
-            .address = getRecordsAmount(shopsData) * sizeof(shop)
+        .key = getRecordsAmount(shopsData),
+        .address = getRecordsAmount(shopsData) * sizeof(shop)
     };
     return newShopIndex;
 }

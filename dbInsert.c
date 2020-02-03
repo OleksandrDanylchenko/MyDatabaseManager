@@ -15,8 +15,9 @@ void insertM() {
     fclose(outputFile);
 
     keyIndex newShopIndex = getNewShopIndex();
+    int recordNum = newShopIndex.key + 1;
     openDbFile(&outputFile, shopsIndices);
-    fwrite(&newShopIndex.key, sizeof(int), 1, outputFile);
+    fwrite(&recordNum, sizeof(int), 1, outputFile);
     fseek(outputFile, 0L, SEEK_END);
     fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
     fclose(outputFile);
@@ -42,7 +43,6 @@ shop getNewShopRecord() {
     newShop.id = getRecordsAmount(shopsData) + 1;
     newShop.isActive = true;
     printf("New address: ");
-    newShop.address = calloc(150, sizeof(char));
     fflush(stdin);
     gets(newShop.address);
     return newShop;
@@ -50,8 +50,8 @@ shop getNewShopRecord() {
 
 keyIndex getNewShopIndex() {
     keyIndex newShopIndex = {
-            .key = getRecordsAmount(shopsData) + 1,
-            .address = (getRecordsAmount(shopsData) + 1) * sizeof(shop)
+            .key = getRecordsAmount(shopsData),
+            .address = getRecordsAmount(shopsData) * sizeof(shop)
     };
     return newShopIndex;
 }

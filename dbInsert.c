@@ -17,7 +17,7 @@ void insertM() {
     keyIndex newShopIndex = getNewShopIndex();
     openDbFile(&outputFile, shopsIndices);
     fwrite(&newShopIndex.key, sizeof(int), 1, outputFile);
-    fseek(outputFile, (long) newShopIndex.address, SEEK_SET);
+    fseek(outputFile, 0L, SEEK_END);
     fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
     fclose(outputFile);
 }

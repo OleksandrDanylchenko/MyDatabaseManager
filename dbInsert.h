@@ -12,6 +12,6 @@ bool validateRecordsAmount(dbFiles fileType);
 
 shop getNewShopRecord();
 
-keyIndex getNewShopIndex();
+keyIndex getNewDataIndex(dbFiles fileType);
 
 #endif //DATABASES_DBINSERT_H

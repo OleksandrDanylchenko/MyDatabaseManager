@@ -13,7 +13,7 @@ void insertM() {
     fwrite(&newShop, sizeof(shop), 1, outputFile);
     fclose(outputFile);
 
-    keyIndex newShopIndex = getNewShopIndex();
+    keyIndex newShopIndex = getNewDataIndex(shopsData);
     int recordNum = newShopIndex.key + 1;
     openDbFile(&outputFile, shopsIndices);
     fwrite(&recordNum, sizeof(int), 1, outputFile);
@@ -47,10 +47,10 @@ shop getNewShopRecord() {
     return newShop;
 }
 
-keyIndex getNewShopIndex() {
+keyIndex getNewDataIndex(dbFiles fileType) {
     keyIndex newShopIndex = {
-        .key = getRecordsAmount(shopsData),
-        .address = getRecordsAmount(shopsData) * sizeof(shop)
+        .key = getRecordsAmount(fileType),
+        .address = getRecordsAmount(fileType) * sizeof(shop)
     };
     return newShopIndex;
 }

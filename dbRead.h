@@ -14,6 +14,6 @@ int getKeyFromUser(dbFiles fileType);
 
 bool readIndices(keyIndex indices[], int size);
 
-shop getShopByKey(keyIndex indices[], int userKey);
+shop getShopByKey(keyIndex indices[], int arrSize, int userKey);
 
 #endif //DATABASES_DBREAD_H

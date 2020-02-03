@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "dbInsert.h"
 
+// TODO
 void insertM() {
     if (!validateRecordsAmount(shopsIndices))
         return;
@@ -50,7 +51,7 @@ shop getNewShopRecord() {
 keyIndex getNewShopIndex() {
     keyIndex newShopIndex = {
             .key = getRecordsAmount(shopsData) + 1,
-            .address = (getRecordsAmount(shopsData) + 1) * sizeof(shop)
+            .address = sizeof(int) + (getRecordsAmount(shopsData) + 1) * sizeof(shop)
     };
     return newShopIndex;
 }

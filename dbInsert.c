@@ -1,15 +1,15 @@
 #include <stdlib.h>
 #include "dbInsert.h"
 
-// TODO
 void insertM() {
     if (!validateRecordsAmount(shopsIndices))
         return;
+
     shop newShop = getNewShopRecord();
 
     FILE *outputFile = NULL;
-
     openDbFile(&outputFile, shopsData);
+    fseek(outputFile, 0L, SEEK_END);
     fwrite(&newShop, sizeof(shop), 1, outputFile);
     free(newShop.address);
     fclose(outputFile);
@@ -51,7 +51,7 @@ shop getNewShopRecord() {
 keyIndex getNewShopIndex() {
     keyIndex newShopIndex = {
             .key = getRecordsAmount(shopsData) + 1,
-            .address = sizeof(int) + (getRecordsAmount(shopsData) + 1) * sizeof(shop)
+            .address = (getRecordsAmount(shopsData) + 1) * sizeof(shop)
     };
     return newShopIndex;
 }

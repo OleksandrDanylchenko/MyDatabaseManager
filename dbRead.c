@@ -42,24 +42,22 @@ bool readIndices(keyIndex indices[], int size) {
     FILE *shopIndicesFile = NULL;
     openDbFile(&shopIndicesFile, shopsIndices);
 
-    int numOfIndices;
-    fread(&numOfIndices, sizeof(int), 1, shopIndicesFile);
-
+    fseek(shopIndicesFile, sizeof(int), SEEK_SET);
     unsigned int readKeysNum = fread(indices, sizeof(keyIndex), size, shopIndicesFile);
     fclose(shopIndicesFile);
-//    if (size != readKeysNum) {
-//        fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");
-//        return false;
-//    }
+    if (size != readKeysNum) {
+        fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");
+        return false;
+    }
     return true;
 }
 
 shop getShopByKey(keyIndex indices[], int arrSize, int userKey) {
     shop foundedShop;
-    if (userKey >= arrSize) {
+    if (userKey - 1 >= arrSize) {
         foundedShop.isActive = false;
     } else {
-        unsigned long offset = indices[userKey].address;
+        unsigned long offset = indices[userKey - 1].address;
         FILE *shopDataFile;
         openDbFile(&shopDataFile, shopsData);
         fseek(shopDataFile, (long) offset, SEEK_SET);

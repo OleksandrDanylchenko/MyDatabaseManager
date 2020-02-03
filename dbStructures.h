@@ -4,7 +4,8 @@
 #define MAX_AMOUNT 20
 
 typedef struct shop {
-    int id; char *address;
+    int id;
+    char address[100];
     bool isActive;
 } shop;
 
@@ -12,9 +13,9 @@ typedef struct shop {
 typedef struct employee {
     int id;
     int shopId;
-    char *post;
-    char *FirstName;
-    char *LastName;
+    char post[50];
+    char FirstName[50];
+    char LastName[50];
     bool isActive;
 } employee;
 

@@ -4,11 +4,13 @@
 #define MAX_RECORDS_AMOUNT 20
 
 #pragma pack(1)
+#include <stdbool.h>
+
 typedef struct shop {
   int id;
   char address[70];
-  bool isActive;
   int employeeId;
+  bool isActive;
 } shop;
 
 #pragma pack(1)

@@ -8,13 +8,16 @@
 #include "dbStructures.h"
 
 shop getM() {
-  shop foundedShop = {.isActive = false};
   int userKey = getKeyFromUser();
-  foundedShop = getShopByKey(userKey);
+  shop foundedShop = getShopByKey(userKey);
   if (!foundedShop.isActive)
     fprintf(stderr, "\nCannot find record in Shop.fl\n");
   else
-    printf("\nId: %d\nAddress: %s\n\n", foundedShop.id, foundedShop.address);
+    printf("\n/   Founded shop:\t/\n"
+           "/   Id: %d\t\t/\n"
+           "/   Address: %s\t/\n"
+           "/   EmployeeId: %d\t/\n\n",
+           foundedShop.id, foundedShop.address, foundedShop.employeeId);
   return foundedShop;
 }
 
@@ -26,7 +29,7 @@ void getAll() {}
 
 int getKeyFromUser() {
   int key;
-  printf("Enter key of shop: ");
+  printf("*\tEnter key of shop: ");
   fflush(stdin);
   scanf("%d", &key);
   return key;
@@ -53,7 +56,7 @@ unsigned long getAddressByKey(int userKey, dbFiles fileType) {
     readIndices(indices, recordsNum, fileType);
 
     for (int i = 0; i < recordsNum; ++i)
-      if (indices[i].key == --userKey)
+      if (indices[i].key == userKey - 1)
         address = indices[i].address;
   }
   return address;

@@ -63,7 +63,7 @@ unsigned int getOption() {
 
   unsigned int opt;
   do {
-    printf("*  Opt: ");
+    printf("*\tOpt: ");
     fflush(stdin);
     scanf("%d", &opt);
   } while (!(opt >= 1 && opt <= 10));

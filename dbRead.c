@@ -9,18 +9,12 @@
 
 shop getM() {
   shop foundedShop = {.isActive = false};
-  int recordsNum = getRecordsAmount(shopsData);
-  keyIndex indices[recordsNum];
-  if (!readIndices(indices, recordsNum, shopsData))
-    fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");
-  else {
-    int userKey = getKeyFromUser();
-    foundedShop = getShopByKey(indices, recordsNum, userKey);
-    if (!foundedShop.isActive)
-      fprintf(stderr, "\nCannot find record in Shop.fl\n");
-    else
-      printf("\nId: %d\nAddress: %s\n\n", foundedShop.id, foundedShop.address);
-  }
+  int userKey = getKeyFromUser();
+  foundedShop = getShopByKey(userKey);
+  if (!foundedShop.isActive)
+    fprintf(stderr, "\nCannot find record in Shop.fl\n");
+  else
+    printf("\nId: %d\nAddress: %s\n\n", foundedShop.id, foundedShop.address);
   return foundedShop;
 }
 
@@ -38,10 +32,10 @@ int getKeyFromUser() {
   return key;
 }
 
-shop getShopByKey(keyIndex *indices, int arrSize, int userKey) {
+shop getShopByKey(int userKey) {
   shop foundedShop = {.isActive = false};
-  unsigned long offset = getAddressByKey(indices, arrSize, arrSize, userKey);
-  if (userKey - 1 < arrSize && offset != -1) {
+  unsigned long offset = getAddressByKey(userKey, shopsData);
+  if (offset != -1) {
     FILE *shopDataFile;
     openDbFile(&shopDataFile, shopsData);
     fseek(shopDataFile, (long)offset, SEEK_SET);
@@ -51,24 +45,25 @@ shop getShopByKey(keyIndex *indices, int arrSize, int userKey) {
   return foundedShop;
 }
 
-bool readIndices(keyIndex *indices, int size, dbFiles fileType) {
+unsigned long getAddressByKey(int userKey, dbFiles fileType) {
+  unsigned long address = -1;
+  int recordsNum = getRecordsAmount(fileType);
+  if (userKey - 1 < recordsNum) {
+    keyIndex indices[recordsNum];
+    readIndices(indices, recordsNum, fileType);
+
+    for (int i = 0; i < recordsNum; ++i)
+      if (indices[i].key == userKey)
+        address = indices[i].address;
+  }
+  return address;
+}
+
+void readIndices(keyIndex *indices, int size, dbFiles fileType) {
   FILE *indicesFile = NULL;
   openDbFile(&indicesFile, fileType);
 
   fseek(indicesFile, sizeof(int), SEEK_SET);
   unsigned int readKeysNum =
-      fread(indices, sizeof(keyIndex), MAX_AMOUNT, indicesFile);
-  fclose(indicesFile);
-  if (size != readKeysNum)
-    return false;
-  return true;
-}
-
-unsigned long getAddressByKey(keyIndex *indices, int arrSize, int userKey,
-                              dbFiles fileType) {
-  unsigned long address = -1;
-  for (int i = 0; i < arrSize; ++i)
-    if (indices[i].key == userKey)
-      address = indices[i].address;
-  return address;
+      fread(indices, sizeof(keyIndex), size, indicesFile);
 }

@@ -12,11 +12,10 @@ void getAll();
 
 int getKeyFromUser();
 
-bool readIndices(keyIndex *indices, int size, dbFiles fileType);
+void readIndices(keyIndex *indices, int size, dbFiles fileType);
 
-unsigned long getAddressByKey(keyIndex *indices, int arrSize, int userKey,
-                    dbFiles fileType);
+unsigned long getAddressByKey(int userKey, dbFiles fileType);
 
-shop getShopByKey(keyIndex *indices, int arrSize, int userKey);
+shop getShopByKey(int userKey);
 
 #endif // DATABASES_DBREAD_H

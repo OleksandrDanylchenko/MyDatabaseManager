@@ -45,8 +45,8 @@ void insertS() {
   fclose(outputFile);
 
   keyIndex newEmployeeIndex = getNewDataIndex(employeesData);
-  int recordNum = newShopIndex.key + 1;
-  openDbFile(&outputFile, shopsIndices);
+  int recordNum = newEmployeeIndex.key + 1;
+  openDbFile(&outputFile, employeesIndices);
   fwrite(&recordNum, sizeof(int), 1, outputFile);
   fseek(outputFile, 0L, SEEK_END);
   fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);

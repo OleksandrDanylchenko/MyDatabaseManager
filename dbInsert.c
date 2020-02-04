@@ -31,7 +31,7 @@ shop getNewShopRecord() {
   return newShop;
 }
 
-// TODO
+// TODO Testing
 void insertS() {
   if (!validateRecordsAmount(employeesIndices))
     return;
@@ -44,12 +44,12 @@ void insertS() {
   fwrite(&newEmployee, sizeof(employee), 1, outputFile);
   fclose(outputFile);
 
-  keyIndex newEmployeeIndex = getNewDataIndex(shopsData);
+  keyIndex newEmployeeIndex = getNewDataIndex(employeesData);
   int recordNum = newShopIndex.key + 1;
   openDbFile(&outputFile, shopsIndices);
   fwrite(&recordNum, sizeof(int), 1, outputFile);
   fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
+  fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
   fclose(outputFile);
 
   // TODO Update first employee id in shop

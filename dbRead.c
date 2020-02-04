@@ -11,7 +11,7 @@ shop getM() {
   shop foundedShop = {.isActive = false};
   int recordsNum = getRecordsAmount(shopsData);
   keyIndex indices[recordsNum];
-  if (!readIndices(indices, recordsNum))
+  if (!readIndices(indices, recordsNum, shopsData))
     fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");
   else {
     int userKey = getKeyFromUser(shopsData);
@@ -38,23 +38,10 @@ int getKeyFromUser(dbFiles fileType) {
   return key;
 }
 
-bool readIndices(keyIndex *indices, int size) {
-  FILE *shopIndicesFile = NULL;
-  openDbFile(&shopIndicesFile, shopsIndices);
-
-  fseek(shopIndicesFile, sizeof(int), SEEK_SET);
-  unsigned int readKeysNum =
-      fread(indices, sizeof(keyIndex), MAX_AMOUNT, shopIndicesFile);
-  fclose(shopIndicesFile);
-  if (size != readKeysNum)
-    return false;
-  return true;
-}
-
 shop getShopByKey(keyIndex indices[], int arrSize, int userKey) {
   shop foundedShop;
 
-  unsigned long offset = -1;
+
   for (int i = 0; i < arrSize; ++i)
     if (indices[i].key == userKey)
       offset = indices[i].address;
@@ -69,4 +56,21 @@ shop getShopByKey(keyIndex indices[], int arrSize, int userKey) {
     fclose(shopDataFile);
   }
   return foundedShop;
+}
+
+bool readIndices(keyIndex *indices, int size, dbFiles fileType) {
+  FILE *indicesFile = NULL;
+  openDbFile(&indicesFile, fileType);
+
+  fseek(indicesFile, sizeof(int), SEEK_SET);
+  unsigned int readKeysNum =
+      fread(indices, sizeof(keyIndex), MAX_AMOUNT, indicesFile);
+  fclose(indicesFile);
+  if (size != readKeysNum)
+    return false;
+  return true;
+}
+
+int getAddressByKey(int userKey, dbFiles fileType) {
+  unsigned long address = -1;
 }

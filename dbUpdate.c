@@ -34,4 +34,19 @@ void updateShopEmployeeId(shop changeShop, int newEmployeeId) {
 }
 
 // TODO
-void updateS() {}
+void updateS() {
+    employee updEmployee = getS();
+    if (updShop.isActive) {
+        printf("\\\\ Enter new address: ");
+        fflush(stdin);
+        gets(updShop.address);
+
+        // TODO Fix doubling
+        FILE *shopDataFile;
+        openDbFile(&shopDataFile, shopsData);
+        unsigned long shopAddress = getAddressByKey(updShop.id, shopsData);
+        fseek(shopDataFile, (long)shopAddress, SEEK_SET);
+        fwrite(&updShop, sizeof(shop), 1, shopDataFile);
+        fclose(shopDataFile);
+    }
+}

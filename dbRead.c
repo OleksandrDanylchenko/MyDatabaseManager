@@ -13,18 +13,14 @@ shop getM() {
   if (!foundedShop.isActive)
     fprintf(stderr, "\n*** Cannot find record in Shop.fl! ***\n");
   else
-    printf("\n\n/   Founded shop:\t/\n"
-           "/   Id: %d\t\t/\n"
-           "/   Address: %s\t/\n"
-           "/   EmployeeId: %d\t/\n\n",
-           foundedShop.id, foundedShop.address, foundedShop.employeeId);
+    formatShopOutput(foundedShop);
   return foundedShop;
 }
 
-// TODO Testing
 void getS() {
   shop mShop = getM();
-  if (!mShop.isActive || mShop.employeeId == -1)
+  if (!mShop.isActive) {
+  } else if (mShop.employeeId == -1)
     fprintf(stderr, "\n*** Shop on %s doesn't have any employee! ***\n",
             mShop.address);
   else {
@@ -32,7 +28,7 @@ void getS() {
     employee employee = getEmployeeByKey(mShop.employeeId);
     bool isFounded = false;
     while (true)
-      if (employee.id == userKey) {
+      if (employee.id == userKey && employee.isActive) {
         isFounded = true;
         break;
       } else if (employee.colleagueId == -1)
@@ -40,20 +36,51 @@ void getS() {
       else
         employee = getEmployeeByKey(employee.colleagueId);
     if (!isFounded)
-      fprintf(stderr, "\n*** Shop on %s doesn't have employee with %d ID number! ***\n",
+      fprintf(stderr,
+              "\n*** Shop on %s doesn't have employee with ID number %d! ***\n",
               mShop.address, userKey);
     else
-      printf("\n\n/   Founded employee:\t/\n"
-             "/   Id: %d\t\t/\n"
-             "/   First name: %s\t/\n"
-             "/   Last name: %s\t/\n"
-             "/   ColleagueId: %d\t/\n\n",
-             employee.id, employee.firstName, employee.lastName, employee.colleagueId);
+      formatEmployeeOutput(employee);
   }
 }
 
 // TODO
-void getAll() {}
+void getAll() {
+  FILE *outputFile = NULL;
+  openDbFile(&outputFile, shopsData);
+  shop outShop = {.isActive = false};
+  while (!feof(outputFile)) {
+    fread(&outShop, sizeof(shop), 1, outputFile);
+    formatShopOutput(outShop);
+  }
+  fclose(outputFile);
+
+  openDbFile(&outputFile, employeesData);
+  employee outEmployee = {.isActive = false};
+  while (!feof(outputFile)) {
+    fread(&outEmployee, sizeof(employee), 1, outputFile);
+    formatEmployeeOutput(outEmployee);
+  }
+  fclose(outputFile);
+}
+
+void formatShopOutput(shop outShop) {
+  printf("\n\n/   Founded shop:\t/\n"
+         "/   Id: %d\t\t/\n"
+         "/   Address: %s\t/\n"
+         "/   EmployeeId: %d\t/\n\n",
+         outShop.id, outShop.address, outShop.employeeId);
+}
+
+void formatEmployeeOutput(employee outEmployee) {
+  printf("\n\n/   Founded employee:\t/\n"
+         "/   Id: %d\t\t/\n"
+         "/   First name: %s\t/\n"
+         "/   Last name: %s\t/\n"
+         "/   ColleagueId: %d\t/\n\n",
+         outEmployee.id, outEmployee.firstName, outEmployee.lastName,
+         outEmployee.colleagueId);
+}
 
 int getUserKey(dbFiles fileType) {
   int key;

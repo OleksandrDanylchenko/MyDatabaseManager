@@ -20,4 +20,8 @@ shop getShopByKey(int userKey);
 
 employee getEmployeeByKey(int userKey);
 
+void formatShopOutput(shop outShop);
+
+void formatEmployeeOutput(employee outEmployee);
+
 #endif // DATABASES_DBREAD_H

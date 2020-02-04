@@ -10,7 +10,7 @@ void getS();
 
 void getAll();
 
-int getKeyFromUser();
+int getUserKey(dbFiles fileType);
 
 void readIndices(keyIndex *indices, int size, dbFiles fileType);
 

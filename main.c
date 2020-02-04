@@ -65,7 +65,7 @@ unsigned int getOption() {
   do {
     printf("*\tOpt: ");
     fflush(stdin);
-    scanf("%d", &opt);
+    scanf("%d", &opt); // NOLINT(cert-err34-c)
   } while (!(opt >= 1 && opt <= 10));
 
   return opt;

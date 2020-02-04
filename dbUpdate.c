@@ -11,6 +11,7 @@ void updateM() {
     fflush(stdin);
     gets(updShop.address);
 
+    // TODO Fix doubling
     FILE *shopDataFile;
     openDbFile(&shopDataFile, shopsData);
     unsigned long shopAddress = getAddressByKey(updShop.id, shopsData);

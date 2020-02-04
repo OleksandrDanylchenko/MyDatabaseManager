@@ -8,7 +8,7 @@
 #include "dbStructures.h"
 
 shop getM() {
-  int userKey = getKeyFromUser();
+  int userKey = getUserKey(shopsData);
   shop foundedShop = getShopByKey(userKey);
   if (!foundedShop.isActive)
     fprintf(stderr, "\n*** Cannot find record in Shop.fl! ***\n");
@@ -22,16 +22,26 @@ shop getM() {
 }
 
 // TODO
-void getS() {}
+void getS() {
+  shop mShop = getM();
+  if (mShop.isActive) {
+    int userKey = getUserKey(shopsData);
+  }
+}
 
 // TODO
-void getAll() {}
+void getAll() {
 
-int getKeyFromUser() {
+}
+
+int getUserKey(dbFiles fileType) {
   int key;
-  printf("*\tEnter key of shop: ");
+  if(fileType == shopsData || fileType == shopsIndices)
+    printf("*\tEnter key of shop: ");
+  else
+    printf("*\tEnter key of employee: ");
   fflush(stdin);
-  scanf("%d", &key);
+  scanf("%d", &key); // NOLINT(cert-err34-c)
   return key;
 }
 

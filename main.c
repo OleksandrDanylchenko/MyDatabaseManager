@@ -48,7 +48,7 @@ int main() {
 }
 
 unsigned int getOption() {
-  printf("****  Choose option:  ****\n"
+  printf("\n****  Choose option:  ****\n"
          "*\t1. get-m\t * \n"
          "*\t2. get-s\t * \n"
          "*\t3. del-m\t * \n"

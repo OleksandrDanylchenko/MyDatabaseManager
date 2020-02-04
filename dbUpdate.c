@@ -4,19 +4,20 @@
 #include "dbStructures.h"
 #include <stdio.h>
 
-// TODO Testing
 void updateM() {
   shop updShop = getM();
-  printf("\\\\ Enter new address: ");
-  fflush(stdin);
-  gets(updShop.address);
-  
-  FILE *shopDataFile;
-  openDbFile(&shopDataFile, shopsData);
-  unsigned long shopAddress = getAddressByKey(updShop.id - 1, shopsData);
-  fseek(shopDataFile, (long)shopAddress, SEEK_SET);
-  fwrite(&updShop, sizeof(shop), 1, shopDataFile);
-  fclose(shopDataFile);
+  if (updShop.isActive) {
+    printf("\\\\ Enter new address: ");
+    fflush(stdin);
+    gets(updShop.address);
+
+    FILE *shopDataFile;
+    openDbFile(&shopDataFile, shopsData);
+    unsigned long shopAddress = getAddressByKey(updShop.id, shopsData);
+    fseek(shopDataFile, (long)shopAddress, SEEK_SET);
+    fwrite(&updShop, sizeof(shop), 1, shopDataFile);
+    fclose(shopDataFile);
+  }
 }
 
 // TODO Testing

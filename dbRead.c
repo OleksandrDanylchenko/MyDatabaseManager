@@ -11,9 +11,9 @@ shop getM() {
   int userKey = getKeyFromUser();
   shop foundedShop = getShopByKey(userKey);
   if (!foundedShop.isActive)
-    fprintf(stderr, "\nCannot find record in Shop.fl\n");
+    fprintf(stderr, "\n*** Cannot find record in Shop.fl! ***\n");
   else
-    printf("\n/   Founded shop:\t/\n"
+    printf("\n\n/   Founded shop:\t/\n"
            "/   Id: %d\t\t/\n"
            "/   Address: %s\t/\n"
            "/   EmployeeId: %d\t/\n\n",

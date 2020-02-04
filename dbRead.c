@@ -17,8 +17,9 @@ shop getM() {
   return foundedShop;
 }
 
-void getS() {
+employee getS() {
   shop mShop = getM();
+  employee foundedEmployee = {.isActive = false};
   if (!mShop.isActive) {
   } else if (mShop.employeeId == -1)
     fprintf(stderr, "\n*** Shop on %s doesn't have any employee! ***\n",
@@ -39,26 +40,32 @@ void getS() {
       fprintf(stderr,
               "\n*** Shop on %s doesn't have employee with ID number %d! ***\n",
               mShop.address, userKey);
-    else
+    else {
       formatEmployeeOutput(employee);
+      foundedEmployee = employee;
+    }
   }
+  return foundedEmployee;
 }
 
-// TODO
 void getAll() {
   FILE *outputFile = NULL;
   openDbFile(&outputFile, shopsData);
   shop outShop = {.isActive = false};
-  while (!feof(outputFile)) {
+  while (true) {
     fread(&outShop, sizeof(shop), 1, outputFile);
+    if (feof(outputFile))
+      break;
     formatShopOutput(outShop);
   }
   fclose(outputFile);
 
   openDbFile(&outputFile, employeesData);
   employee outEmployee = {.isActive = false};
-  while (!feof(outputFile)) {
+  while (true) {
     fread(&outEmployee, sizeof(employee), 1, outputFile);
+    if (feof(outputFile))
+      break;
     formatEmployeeOutput(outEmployee);
   }
   fclose(outputFile);

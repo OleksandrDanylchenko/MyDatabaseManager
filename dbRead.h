@@ -6,7 +6,7 @@
 
 shop getM();
 
-void getS();
+employee getS();
 
 void getAll();
 

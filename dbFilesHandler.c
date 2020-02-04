@@ -6,8 +6,10 @@ void openDbFile(FILE **file, dbFiles fileType) {
     path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Shops.fl";
   else if (fileType == shopsIndices)
     path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Shops.ind";
-  else
+  else if (fileType == employeesData)
     path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.fl";
+  else
+    path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.ind";
   *file = fopen(path, "r+");
 }
 

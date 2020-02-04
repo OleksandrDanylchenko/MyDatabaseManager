@@ -24,12 +24,10 @@ void insertM() {
 }
 
 shop getNewShopRecord() {
-  shop newShop;
-  newShop.id = getRecordsAmount(shopsData) + 1;
+  shop newShop = {.id = getRecordsAmount(shopsData) + 1, .isActive = true};
   printf("New address: ");
   fflush(stdin);
   gets(newShop.address);
-  newShop.isActive = true;
   return newShop;
 }
 
@@ -37,11 +35,43 @@ shop getNewShopRecord() {
 void insertS() {
   if (!validateRecordsAmount(employeesIndices))
     return;
-  shop masterShop = getM();
+  shop mShop = getM();
+  employee newEmployee = getNewEmployeeRecord(mShop.employeeId);
+
+  FILE *outputFile = NULL;
+  openDbFile(&outputFile, employeesData);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newEmployee, sizeof(employee), 1, outputFile);
+  fclose(outputFile);
+
+  keyIndex newEmployeeIndex = getNewDataIndex(shopsData);
+  int recordNum = newShopIndex.key + 1;
+  openDbFile(&outputFile, shopsIndices);
+  fwrite(&recordNum, sizeof(int), 1, outputFile);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
+  fclose(outputFile);
+
+  // TODO Update first employee id in shop
+}
+
+employee getNewEmployeeRecord(int colleagueId) {
+  employee newEmployee = {.id = getRecordsAmount(employeesData) + 1,
+                          .isActive = true,
+                          .colleagueId = colleagueId};
+  printf("New employee:\n"
+         "First name: ");
+  fflush(stdin);
+  gets(newEmployee.firstName);
+  printf("Last name: ");
+  fflush(stdin);
+  gets(newEmployee.lastName);
+  return newEmployee;
 }
 
 bool validateRecordsAmount(dbFiles fileType) {
-  const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl"};
+  const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl",
+                             "Employees.ind"};
   if (getRecordsAmount(fileType) >= MAX_AMOUNT) {
     fprintf(stderr, "\n%s cannot store more than 20 records!\n",
             fileNames[fileType]);

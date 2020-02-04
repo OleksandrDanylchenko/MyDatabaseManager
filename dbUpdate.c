@@ -20,12 +20,13 @@ void updateM() {
   }
 }
 
-// TODO Testing
 void updateShopEmployeeId(shop changeShop, int newEmployeeId) {
   changeShop.employeeId = newEmployeeId;
+
+  // TODO Fix doubling
   FILE *shopDataFile;
   openDbFile(&shopDataFile, shopsData);
-  unsigned long shopAddress = getAddressByKey(changeShop.id - 1, shopsData);
+  unsigned long shopAddress = getAddressByKey(changeShop.id, shopsData);
   fseek(shopDataFile, (long)shopAddress, SEEK_SET);
   fwrite(&changeShop, sizeof(shop), 1, shopDataFile);
   fclose(shopDataFile);

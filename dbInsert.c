@@ -34,35 +34,36 @@ shop getNewShopRecord() {
   return newShop;
 }
 
-// TODO Testing
 void insertS() {
   if (!validateRecordsAmount(employeesIndices))
     return;
   shop mShop = getM();
-  employee newEmployee = getNewEmployeeRecord(mShop.employeeId);
+  if(mShop.isActive) {
+    employee newEmployee = getNewEmployeeRecord(mShop.employeeId);
 
-  FILE *outputFile = NULL;
-  openDbFile(&outputFile, employeesData);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newEmployee, sizeof(employee), 1, outputFile);
-  fclose(outputFile);
+    FILE *outputFile = NULL;
+    openDbFile(&outputFile, employeesData);
+    fseek(outputFile, 0L, SEEK_END);
+    fwrite(&newEmployee, sizeof(employee), 1, outputFile);
+    fclose(outputFile);
 
-  keyIndex newEmployeeIndex = getNewDataIndex(employeesData);
-  int recordNum = newEmployeeIndex.key + 1;
-  openDbFile(&outputFile, employeesIndices);
-  fwrite(&recordNum, sizeof(int), 1, outputFile);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
-  fclose(outputFile);
+    keyIndex newEmployeeIndex = getNewDataIndex(employeesData);
+    int recordNum = newEmployeeIndex.key + 1;
+    openDbFile(&outputFile, employeesIndices);
+    fwrite(&recordNum, sizeof(int), 1, outputFile);
+    fseek(outputFile, 0L, SEEK_END);
+    fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
+    fclose(outputFile);
 
-  updateShopEmployeeId(mShop, newEmployee.id);
+    updateShopEmployeeId(mShop, newEmployee.id);
+  }
 }
 
 employee getNewEmployeeRecord(int colleagueId) {
   employee newEmployee = {.id = getRecordsAmount(employeesData) + 1,
                           .isActive = true,
                           .colleagueId = colleagueId};
-  printf("\\\\ New employee:\n"
+  printf("\\\\ Enter credentials of new employee:\n"
          "\\\\ First name: ");
   fflush(stdin);
   gets(newEmployee.firstName);

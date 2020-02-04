@@ -16,8 +16,8 @@ typedef struct shop {
 #pragma pack(1)
 typedef struct employee {
   int id;
-  char firstName[50];
-  char lastName[50];
+  char firstName[30];
+  char lastName[30];
   int colleagueId;
   bool isActive;
 } employee;

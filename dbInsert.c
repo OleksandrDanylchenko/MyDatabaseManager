@@ -44,6 +44,7 @@ void insertS() {
     FILE *outputFile = NULL;
     openDbFile(&outputFile, employeesData);
     fseek(outputFile, 0L, SEEK_END);
+    int a = sizeof(employee);
     fwrite(&newEmployee, sizeof(employee), 1, outputFile);
     fclose(outputFile);
 
@@ -85,8 +86,10 @@ bool validateRecordsAmount(dbFiles fileType) {
 }
 
 keyIndex getNewDataIndex(dbFiles fileType) {
-  keyIndex newShopIndex = {.key = getRecordsAmount(fileType),
-                           .address =
-                               getRecordsAmount(fileType) * sizeof(shop)};
+  keyIndex newShopIndex = {.key = getRecordsAmount(fileType)};
+  if (fileType == shopsData || fileType == shopsIndices)
+    newShopIndex.address = getRecordsAmount(fileType) * sizeof(shop);
+  else
+    newShopIndex.address = getRecordsAmount(fileType) * sizeof(employee);
   return newShopIndex;
 }

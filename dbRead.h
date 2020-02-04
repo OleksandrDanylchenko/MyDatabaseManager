@@ -18,4 +18,6 @@ unsigned long getAddressByKey(int userKey, dbFiles fileType);
 
 shop getShopByKey(int userKey);
 
+employee getEmployeeByKey(int userKey);
+
 #endif // DATABASES_DBREAD_H

@@ -21,22 +21,43 @@ shop getM() {
   return foundedShop;
 }
 
-// TODO
+// TODO Testing
 void getS() {
   shop mShop = getM();
-  if (mShop.isActive) {
-    int userKey = getUserKey(shopsData);
+  if (!mShop.isActive || mShop.employeeId == -1)
+    fprintf(stderr, "\n*** Shop on %s doesn't have any employee! ***\n",
+            mShop.address);
+  else {
+    int userKey = getUserKey(employeesData);
+    employee employee = getEmployeeByKey(mShop.employeeId);
+    bool isFounded = false;
+    while (true)
+      if (employee.id == userKey) {
+        isFounded = true;
+        break;
+      } else if (employee.colleagueId == -1)
+        break;
+      else
+        employee = getEmployeeByKey(employee.colleagueId);
+    if (!isFounded)
+      fprintf(stderr, "\n*** Shop on %s doesn't have employee with %d ID number! ***\n",
+              mShop.address, userKey);
+    else
+      printf("\n\n/   Founded employee:\t/\n"
+             "/   Id: %d\t\t/\n"
+             "/   First name: %s\t/\n"
+             "/   Last name: %s\t/\n"
+             "/   ColleagueId: %d\t/\n\n",
+             employee.id, employee.firstName, employee.lastName, employee.colleagueId);
   }
 }
 
 // TODO
-void getAll() {
-
-}
+void getAll() {}
 
 int getUserKey(dbFiles fileType) {
   int key;
-  if(fileType == shopsData || fileType == shopsIndices)
+  if (fileType == shopsData || fileType == shopsIndices)
     printf("*\tEnter key of shop: ");
   else
     printf("*\tEnter key of employee: ");
@@ -47,6 +68,7 @@ int getUserKey(dbFiles fileType) {
 
 shop getShopByKey(int userKey) {
   shop foundedShop = {.isActive = false};
+  // TODO Work with copy
   unsigned long offset = getAddressByKey(userKey, shopsData);
   if (offset != -1) {
     FILE *shopDataFile;
@@ -56,6 +78,20 @@ shop getShopByKey(int userKey) {
     fclose(shopDataFile);
   }
   return foundedShop;
+}
+
+employee getEmployeeByKey(int userKey) {
+  employee foundedEmployee = {.isActive = false};
+  // TODO Work with copy
+  unsigned long offset = getAddressByKey(userKey, employeesData);
+  if (offset != -1) {
+    FILE *employeeDataFile;
+    openDbFile(&employeeDataFile, employeesData);
+    fseek(employeeDataFile, (long)offset, SEEK_SET);
+    fread(&foundedEmployee, sizeof(employee), 1, employeeDataFile);
+    fclose(employeeDataFile);
+  }
+  return foundedEmployee;
 }
 
 unsigned long getAddressByKey(int userKey, dbFiles fileType) {

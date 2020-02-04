@@ -28,7 +28,7 @@ shop getNewShopRecord() {
   shop newShop = {.id = getRecordsAmount(shopsData) + 1,
                   .employeeId = -1,
                   .isActive = true};
-  printf("New address: ");
+  printf("\\\\ New address: ");
   fflush(stdin);
   gets(newShop.address);
   return newShop;
@@ -62,11 +62,11 @@ employee getNewEmployeeRecord(int colleagueId) {
   employee newEmployee = {.id = getRecordsAmount(employeesData) + 1,
                           .isActive = true,
                           .colleagueId = colleagueId};
-  printf("New employee:\n"
-         "First name: ");
+  printf("\\\\ New employee:\n"
+         "\\\\ First name: ");
   fflush(stdin);
   gets(newEmployee.firstName);
-  printf("Last name: ");
+  printf("\\\\ Last name: ");
   fflush(stdin);
   gets(newEmployee.lastName);
   return newEmployee;

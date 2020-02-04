@@ -71,4 +71,5 @@ void readIndices(keyIndex *indices, int size, dbFiles fileType) {
 
   fseek(indicesFile, sizeof(int), SEEK_SET);
   fread(indices, sizeof(keyIndex), size, indicesFile);
+  fclose(indicesFile);
 }

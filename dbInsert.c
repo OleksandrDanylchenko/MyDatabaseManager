@@ -2,6 +2,7 @@
 #pragma pack(1)
 #include "dbInsert.h"
 #include "dbRead.h"
+#include "dbUpdate.h"
 
 void insertM() {
   if (!validateRecordsAmount(shopsIndices))
@@ -54,7 +55,7 @@ void insertS() {
   fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
   fclose(outputFile);
 
-  // TODO Update first employee id in shop
+  updateShopEmployeeId(mShop, newEmployee.id);
 }
 
 employee getNewEmployeeRecord(int colleagueId) {
@@ -74,7 +75,7 @@ employee getNewEmployeeRecord(int colleagueId) {
 bool validateRecordsAmount(dbFiles fileType) {
   const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl",
                              "Employees.ind"};
-  if (getRecordsAmount(fileType) >= MAX_AMOUNT) {
+  if (getRecordsAmount(fileType) >= MAX_RECORDS_AMOUNT) {
     fprintf(stderr, "\n%s cannot store more than 20 records!\n",
             fileNames[fileType]);
     return false;

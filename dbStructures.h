@@ -1,7 +1,7 @@
 #ifndef DATABASES_DBSTRUCTURES_H
 #define DATABASES_DBSTRUCTURES_H
 
-#define MAX_AMOUNT 20
+#define MAX_RECORDS_AMOUNT 20
 
 #pragma pack(1)
 typedef struct shop {

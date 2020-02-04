@@ -5,25 +5,25 @@
 
 #pragma pack(1)
 typedef struct shop {
-    int id;
-    char address[70];
-    bool isActive;
-    int employeeId;
+  int id;
+  char address[70];
+  bool isActive;
+  int employeeId;
 } shop;
 
 #pragma pack(1)
 typedef struct employee {
-    int id;
-    char FirstName[50];
-    char LastName[50];
-    int colleagueId;
-    bool isActive;
+  int id;
+  char FirstName[50];
+  char LastName[50];
+  int colleagueId;
+  bool isActive;
 } employee;
 
 #pragma pack(1)
 typedef struct keyIndex {
-    int key;
-    unsigned long address;
+  int key;
+  unsigned long address;
 } keyIndex;
 
-#endif //DATABASES_DBSTRUCTURES_H
+#endif // DATABASES_DBSTRUCTURES_H

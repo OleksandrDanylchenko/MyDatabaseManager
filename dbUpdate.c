@@ -1,11 +1,7 @@
 #include "dbUpdate.h"
 
 // TODO
-void updateM() {
-
-}
+void updateM() {}
 
 // TODO
-void updateS() {
-
-}
+void updateS() {}

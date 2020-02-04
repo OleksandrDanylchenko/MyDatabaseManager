@@ -1,10 +1,6 @@
 #include "dbDeletion.h"
 
 // TODO
-void delM() {
-
-}
+void delM() {}
 // TODO
-void delS() {
-
-}
+void delS() {}

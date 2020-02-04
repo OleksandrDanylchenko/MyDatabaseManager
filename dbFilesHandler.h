@@ -4,14 +4,14 @@
 #include <stdio.h>
 
 typedef enum dbFiles {
-    shopsData,
-    shopsIndices,
-    employeesData,
-    employeesIndices
+  shopsData,
+  shopsIndices,
+  employeesData,
+  employeesIndices
 } dbFiles;
 
 void openDbFile(FILE **file, dbFiles fileType);
 
 int getRecordsAmount(dbFiles fileType);
 
-#endif //DATABASES_FILESHANDLER_H
+#endif // DATABASES_FILESHANDLER_H

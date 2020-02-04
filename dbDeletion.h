@@ -5,4 +5,4 @@ void delM();
 
 void delS();
 
-#endif //DATABASES_DBDELETION_H
+#endif // DATABASES_DBDELETION_H

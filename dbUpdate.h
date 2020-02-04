@@ -5,4 +5,4 @@ void updateM();
 
 void updateS();
 
-#endif //DATABASES_DBUPDATE_H
+#endif // DATABASES_DBUPDATE_H

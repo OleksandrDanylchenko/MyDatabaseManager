@@ -53,7 +53,7 @@ unsigned long getAddressByKey(int userKey, dbFiles fileType) {
     readIndices(indices, recordsNum, fileType);
 
     for (int i = 0; i < recordsNum; ++i)
-      if (indices[i].key == userKey)
+      if (indices[i].key == --userKey)
         address = indices[i].address;
   }
   return address;
@@ -61,9 +61,11 @@ unsigned long getAddressByKey(int userKey, dbFiles fileType) {
 
 void readIndices(keyIndex *indices, int size, dbFiles fileType) {
   FILE *indicesFile = NULL;
-  openDbFile(&indicesFile, fileType);
+  if (fileType == shopsData || fileType == shopsIndices)
+    openDbFile(&indicesFile, shopsIndices);
+  else
+    openDbFile(&indicesFile, employeesIndices);
 
   fseek(indicesFile, sizeof(int), SEEK_SET);
-  unsigned int readKeysNum =
-      fread(indices, sizeof(keyIndex), size, indicesFile);
+  fread(indices, sizeof(keyIndex), size, indicesFile);
 }

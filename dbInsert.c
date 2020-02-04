@@ -24,7 +24,9 @@ void insertM() {
 }
 
 shop getNewShopRecord() {
-  shop newShop = {.id = getRecordsAmount(shopsData) + 1, .isActive = true};
+  shop newShop = {.id = getRecordsAmount(shopsData) + 1,
+                  .employeeId = -1,
+                  .isActive = true};
   printf("New address: ");
   fflush(stdin);
   gets(newShop.address);

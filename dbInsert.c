@@ -22,21 +22,6 @@ void insertM() {
     fclose(outputFile);
 }
 
-// TODO
-void insertS() {
-    if (!validateRecordsAmount(employeesIndices))
-        return;
-}
-
-bool validateRecordsAmount(dbFiles fileType) {
-    const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl", "Employees.ind"};
-    if (getRecordsAmount(fileType) >= MAX_AMOUNT) {
-        fprintf(stderr, "\n%s cannot store more than 20 records!\n", fileNames[fileType]);
-        return false;
-    }
-    return true;
-}
-
 shop getNewShopRecord() {
     shop newShop;
     newShop.id = getRecordsAmount(shopsData) + 1;
@@ -46,6 +31,23 @@ shop getNewShopRecord() {
     newShop.isActive = true;
     return newShop;
 }
+
+// TODO
+void insertS() {
+    if (!validateRecordsAmount(employeesIndices))
+        return;
+}
+
+bool validateRecordsAmount(dbFiles fileType) {
+    const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl"};
+    if (getRecordsAmount(fileType) >= MAX_AMOUNT) {
+        fprintf(stderr, "\n%s cannot store more than 20 records!\n", fileNames[fileType]);
+        return false;
+    }
+    return true;
+}
+
+
 
 keyIndex getNewDataIndex(dbFiles fileType) {
     keyIndex newShopIndex = {

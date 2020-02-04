@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
+
 #pragma pack(1)
+
 #include "dbRead.h"
 #include "dbStructures.h"
 #include "dbFilesHandler.h"
@@ -54,10 +56,15 @@ bool readIndices(keyIndex indices[], int size) {
 
 shop getShopByKey(keyIndex indices[], int arrSize, int userKey) {
     shop foundedShop;
-    if (userKey - 1 >= arrSize) {
+
+    unsigned long offset = -1;
+    for (int i = 0; i < arrSize; ++i)
+        if(indices[i].key == userKey)
+            offset = indices[i].address;
+
+    if (userKey - 1 >= arrSize || offset == -1) {
         foundedShop.isActive = false;
     } else {
-        unsigned long offset = indices[userKey - 1].address;
         FILE *shopDataFile;
         openDbFile(&shopDataFile, shopsData);
         fseek(shopDataFile, (long) offset, SEEK_SET);

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#pragma pack(1)
 #include "dbRead.h"
 #include "dbDeletion.h"
 #include "dbUpdate.h"

@@ -8,16 +8,16 @@ typedef struct shop {
     int id;
     char address[70];
     bool isActive;
+    int employeeId;
 } shop;
 
 #pragma pack(1)
 typedef struct employee {
     int id;
-    int shopId;
-    char post[50];
     char FirstName[50];
     char LastName[50];
     bool isActive;
+    int colleagueId;
 } employee;
 
 #pragma pack(1)

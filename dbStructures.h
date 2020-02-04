@@ -16,8 +16,8 @@ typedef struct employee {
     int id;
     char FirstName[50];
     char LastName[50];
-    bool isActive;
     int colleagueId;
+    bool isActive;
 } employee;
 
 #pragma pack(1)

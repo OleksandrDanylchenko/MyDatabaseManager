@@ -7,19 +7,21 @@
 #include "dbStructures.h"
 #include "dbFilesHandler.h"
 
-void getM() {
+shop getM() {
+    shop foundedShop = {.isActive = false};
     int recordsNum = getRecordsAmount(shopsData);
     keyIndex indices[recordsNum];
     if (!readIndices(indices, recordsNum))
-        return;
-
-    int userKey = getKeyFromUser(shopsData);
-    shop foundedShop = getShopByKey(indices, recordsNum, userKey);
-    if (!foundedShop.isActive) {
-        fprintf(stderr, "\nCannot find record in Shop.fl\n");
-        return;
+        fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");
+    else {
+        int userKey = getKeyFromUser(shopsData);
+        foundedShop = getShopByKey(indices, recordsNum, userKey);
+        if (!foundedShop.isActive)
+            fprintf(stderr, "\nCannot find record in Shop.fl\n");
+        else
+            printf("\nId: %d\nAddress: %s\n\n", foundedShop.id, foundedShop.address);
     }
-    printf("\nId: %d\nAddress: %s\n\n", foundedShop.id, foundedShop.address);
+    return foundedShop;
 }
 
 // TODO
@@ -40,17 +42,15 @@ int getKeyFromUser(dbFiles fileType) {
     return key;
 }
 
-bool readIndices(keyIndex indices[], int size) {
+bool readIndices(keyIndex *indices, int size) {
     FILE *shopIndicesFile = NULL;
     openDbFile(&shopIndicesFile, shopsIndices);
 
     fseek(shopIndicesFile, sizeof(int), SEEK_SET);
     unsigned int readKeysNum = fread(indices, sizeof(keyIndex), MAX_AMOUNT, shopIndicesFile);
     fclose(shopIndicesFile);
-    if (size != readKeysNum) {
-        fprintf(stderr, "\nCannot properly read all Shop.fl records!\n");
+    if (size != readKeysNum)
         return false;
-    }
     return true;
 }
 
@@ -59,7 +59,7 @@ shop getShopByKey(keyIndex indices[], int arrSize, int userKey) {
 
     unsigned long offset = -1;
     for (int i = 0; i < arrSize; ++i)
-        if(indices[i].key == userKey)
+        if (indices[i].key == userKey)
             offset = indices[i].address;
 
     if (userKey - 1 >= arrSize || offset == -1) {

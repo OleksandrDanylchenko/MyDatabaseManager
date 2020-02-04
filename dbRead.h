@@ -4,7 +4,7 @@
 #include "dbStructures.h"
 #include "dbFilesHandler.h"
 
-void getM();
+shop getM();
 
 void getS();
 
@@ -12,7 +12,7 @@ void getAll();
 
 int getKeyFromUser(dbFiles fileType);
 
-bool readIndices(keyIndex indices[], int size);
+bool readIndices(keyIndex *indices, int size);
 
 shop getShopByKey(keyIndex indices[], int arrSize, int userKey);
 

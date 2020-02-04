@@ -36,6 +36,7 @@ shop getNewShopRecord() {
 void insertS() {
     if (!validateRecordsAmount(employeesIndices))
         return;
+    getM();
 }
 
 bool validateRecordsAmount(dbFiles fileType) {
@@ -46,8 +47,6 @@ bool validateRecordsAmount(dbFiles fileType) {
     }
     return true;
 }
-
-
 
 keyIndex getNewDataIndex(dbFiles fileType) {
     keyIndex newShopIndex = {

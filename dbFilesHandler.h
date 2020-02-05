@@ -8,11 +8,9 @@ typedef enum dbFiles {
   shopsIndices,
   employeesData,
   employeesIndices,
-  trashKeys
+  trashZoneData
 } dbFiles;
 
 void openDbFile(FILE **file, dbFiles fileType);
-
-
 
 #endif // DATABASES_FILESHANDLER_H

@@ -67,7 +67,6 @@ void updateShopToInactive(shop delShop) {
   fclose(shopDataFile);
 }
 
-// TODO
 void updateEmployeeToInactive(employee delEmployee) {
   delEmployee.isActive = false;
 
@@ -80,9 +79,9 @@ void updateEmployeeToInactive(employee delEmployee) {
   fclose(employeeDataFile);
 }
 
-void updateTrashZone(trashZoneData trashZone) {
+void updateTrashZone(trashZone updTrashZone) {
   FILE *trashZoneFile = NULL;
-  openDbFile(&trashZoneFile, employeesData);
-  fwrite(&trashZone, sizeof(trashZoneData), 1, trashZoneFile);
+  openDbFile(&trashZoneFile, trashZoneData);
+  fwrite(&updTrashZone, sizeof(trashZoneData), 1, trashZoneFile);
   fclose(trashZoneFile);
 }

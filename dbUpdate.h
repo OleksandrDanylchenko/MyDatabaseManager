@@ -13,6 +13,6 @@ void updateShopToInactive(shop delShop);
 
 void updateEmployeeToInactive(employee delEmployee);
 
-void updateTrashZone(trashZoneData trashZone);
+void updateTrashZone(trashZone trashZoneData);
 
 #endif // DATABASES_DBUPDATE_H

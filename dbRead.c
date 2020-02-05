@@ -171,7 +171,7 @@ int getRecordsNum(dbFiles fileType) {
 }
 
 trashZoneData getTrashZoneData() {
-  trashZoneData trashZone;
+  trashZone trashZone;
 
   FILE *trashZoneFile = NULL;
   fread(&trashZone, sizeof(trashZone), 1, trashZoneFile);

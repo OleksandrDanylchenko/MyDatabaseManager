@@ -34,6 +34,6 @@ typedef struct trashKeys {
   int employeesAmount;
   bool shops[MAX_RECORDS_AMOUNT];
   bool employees[MAX_RECORDS_AMOUNT];
-} trashZoneData;
+} trashZone;
 
 #endif // DATABASES_DBSTRUCTURES_H

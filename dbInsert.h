@@ -21,12 +21,12 @@ void insertNewShopRecord(int id);
 
 void insertNewShopIndex();
 
-void insertNewEmployeeRecord(shop mShop);
+void insertNewEmployeeRecord(shop mShop, int id);
 
 void insertNewEmployeeIndex();
 
-int geShopTrashKey() {
+int getShopTrashKey();
 
-}
+int getEmployeeTrashKey();
 
 #endif // DATABASES_DBINSERT_H

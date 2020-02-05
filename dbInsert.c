@@ -4,24 +4,25 @@
 #include "dbRead.h"
 #include "dbUpdate.h"
 
-// TODO Insetion on inactive pos
 void insertM() {
+  int id = -1;
   if (!validateRecordsAmount(shopsIndices)) {
-
+    id = getShopTrashKey();
     return;
   }
-  insertNewShopRecord(-1);
+  insertNewShopRecord(id);
   insertNewShopIndex();
 }
 
-
-// TODO Insetion on inactive pos
 void insertS() {
-  if (!validateRecordsAmount(employeesIndices))
+  int id = -1;
+  if (!validateRecordsAmount(employeesIndices)) {
+    id = getEmployeeTrashKey();
     return;
+  }
   shop mShop = getM();
   if (mShop.isActive) {
-    insertNewEmployeeRecord(mShop);
+    insertNewEmployeeRecord(mShop, id);
     insertNewEmployeeIndex();
   }
 }
@@ -77,18 +78,16 @@ void insertNewShopRecord(int id) {
 }
 
 shop getNewShopRecord() {
-  shop newShop = {.id = getRecordsNum(shopsData) + 1,
-      .employeeId = -1,
-      .isActive = true};
+  shop newShop = {
+      .id = getRecordsNum(shopsData) + 1, .employeeId = -1, .isActive = true};
   printf("\\\\ New address: ");
   fflush(stdin);
   gets(newShop.address);
   return newShop;
 }
 
-
 // TODO ID Tracking
-void insertNewEmployeeRecord(shop mShop) {
+void insertNewEmployeeRecord(shop mShop, int id) {
   employee newEmployee = getNewEmployeeRecord(mShop);
   mShop.employeeId = newEmployee.id;
   updateShop(mShop);
@@ -120,4 +119,24 @@ void insertNewEmployeeIndex() {
   fseek(outputFile, 0L, SEEK_END);
   fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
   fclose(outputFile);
+}
+
+int getShopTrashKey() {
+  trashZone trashZone = getTrashZoneData();
+  int shopsAmount = trashZone.shopsAmount;
+  if (shopsAmount != 0) {
+    --trashZone.shopsAmount;
+    updateTrashZone(trashZone);
+    return trashZone.shops[shopsAmount];
+  }
+}
+
+int getEmployeeTrashKey() {
+  trashZone trashZone = getTrashZoneData();
+  int employeesAmount = trashZone.employeesAmount;
+  if (employeesAmount != 0) {
+    --trashZone.employeesAmount;
+    updateTrashZone(trashZone);
+    return trashZone.shops[employeesAmount];
+  }
 }

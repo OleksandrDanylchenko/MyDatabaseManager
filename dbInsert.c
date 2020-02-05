@@ -8,7 +8,10 @@ void insertM() {
   int id = -1;
   if (!validateRecordsAmount(shopsIndices)) {
     id = getShopTrashKey();
-    return;
+    if (id == -1) {
+      fprintf(stderr, "\nShop.fl cannot store more than 20 records!\n");
+      return;
+    }
   }
   insertNewShopRecord(id);
   insertNewShopIndex();
@@ -18,7 +21,10 @@ void insertS() {
   int id = -1;
   if (!validateRecordsAmount(employeesIndices)) {
     id = getEmployeeTrashKey();
-    return;
+    if (id == -1) {
+      fprintf(stderr, "\nEmployee.fl cannot store more than 20 records!\n");
+      return;
+    }
   }
   shop mShop = getM();
   if (mShop.isActive) {
@@ -48,13 +54,8 @@ employee getNewEmployeeRecord(shop mShop) {
 }
 
 bool validateRecordsAmount(dbFiles fileType) {
-  const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl",
-                             "Employees.ind"};
-  if (getRecordsNum(fileType) >= MAX_RECORDS_AMOUNT) {
-    fprintf(stderr, "\n%s cannot store more than 20 records!\n",
-            fileNames[fileType]);
+  if (getRecordsNum(fileType) >= MAX_RECORDS_AMOUNT)
     return false;
-  }
   return true;
 }
 
@@ -67,9 +68,11 @@ keyIndex getNewDataIndex(dbFiles fileType) {
   return newShopIndex;
 }
 
-// TODO ID Tracking
 void insertNewShopRecord(int id) {
   shop newShop = getNewShopRecord();
+  if (id != -1)
+    newShop.id = id;
+
   FILE *outputFile = NULL;
   openDbFile(&outputFile, shopsData);
   fseek(outputFile, 0L, SEEK_END);
@@ -86,9 +89,10 @@ shop getNewShopRecord() {
   return newShop;
 }
 
-// TODO ID Tracking
 void insertNewEmployeeRecord(shop mShop, int id) {
   employee newEmployee = getNewEmployeeRecord(mShop);
+  if (id != -1)
+    newEmployee.id = id;
   mShop.employeeId = newEmployee.id;
   updateShop(mShop);
 
@@ -129,6 +133,7 @@ int getShopTrashKey() {
     updateTrashZone(trashZone);
     return trashZone.shops[shopsAmount];
   }
+  return -1;
 }
 
 int getEmployeeTrashKey() {
@@ -139,4 +144,5 @@ int getEmployeeTrashKey() {
     updateTrashZone(trashZone);
     return trashZone.shops[employeesAmount];
   }
+  return -1;
 }

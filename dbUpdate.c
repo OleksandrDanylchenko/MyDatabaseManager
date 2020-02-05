@@ -45,7 +45,7 @@ void updateS() {
     gets(updEmployee.lastName);
 
     // TODO Fix doubling
-    FILE *employeesDataFile;
+    FILE *employeesDataFile = NULL;
     openDbFile(&employeesDataFile, employeesData);
     unsigned long employeeAddress =
         getAddressByKey(updEmployee.id, employeesData);
@@ -55,11 +55,11 @@ void updateS() {
   }
 }
 
-void writeShopInactive(shop delShop) {
+void updateShopToInactive(shop delShop) {
   delShop.isActive = false;
 
   // TODO Fix doubling
-  FILE *shopDataFile;
+  FILE *shopDataFile = NULL;
   openDbFile(&shopDataFile, shopsData);
   unsigned long shopAddress = getAddressByKey(delShop.id, shopsData);
   fseek(shopDataFile, (long)shopAddress, SEEK_SET);
@@ -68,14 +68,21 @@ void writeShopInactive(shop delShop) {
 }
 
 // TODO
-void writeEmployeeInactive(employee delEmployee) {
+void updateEmployeeToInactive(employee delEmployee) {
   delEmployee.isActive = false;
 
   // TODO Fix doubling
-  FILE *employeeDataFile;
+  FILE *employeeDataFile = NULL;
   openDbFile(&employeeDataFile, employeesData);
   unsigned long employeeAddress = getAddressByKey(delEmployee.id, shopsData);
   fseek(employeeDataFile, (long)employeeAddress, SEEK_SET);
   fwrite(&delEmployee, sizeof(employee), 1, employeeDataFile);
   fclose(employeeDataFile);
+}
+
+void updateTrashZone(trashZoneData trashZone) {
+  FILE *trashZoneFile = NULL;
+  openDbFile(&trashZoneFile, employeesData);
+  fwrite(&trashZone, sizeof(trashZoneData), 1, trashZoneFile);
+  fclose(trashZoneFile);
 }

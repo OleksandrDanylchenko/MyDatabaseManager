@@ -58,7 +58,8 @@ void getAll() {
     fread(&outShop, sizeof(shop), 1, outputFile);
     if (feof(outputFile))
       break;
-    formatShopOutput(outShop);
+    if (outShop.isActive)
+      formatShopOutput(outShop);
   }
   fclose(outputFile);
 

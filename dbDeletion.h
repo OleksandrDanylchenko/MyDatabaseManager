@@ -11,6 +11,4 @@ void delS();
 
 void writeShopEmployeesInactive(trashZoneData *trashZone, shop delShop);
 
-
-
 #endif // DATABASES_DBDELETION_H

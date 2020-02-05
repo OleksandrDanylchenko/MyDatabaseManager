@@ -26,6 +26,7 @@ void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
     updateEmployee(delEmployee);
     if (delEmployee.nextColleagueId == -1)
       break;
+    delEmployee = getEmployeeByKey(delEmployee.nextColleagueId);
   }
 }
 

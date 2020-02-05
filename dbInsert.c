@@ -127,22 +127,18 @@ void insertNewEmployeeIndex() {
 
 int getShopTrashKey() {
   trashZone trashZone = getTrashZoneData();
-  int shopsAmount = trashZone.shopsAmount;
-  if (shopsAmount != 0) {
-    --trashZone.shopsAmount;
-    updateTrashZone(trashZone);
-    return trashZone.shops[shopsAmount];
-  }
+  if (trashZone.shopsAmount != 0)
+    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
+      if (trashZone.shops[i])
+        return ++i;
   return -1;
 }
 
 int getEmployeeTrashKey() {
   trashZone trashZone = getTrashZoneData();
-  int employeesAmount = trashZone.employeesAmount;
-  if (employeesAmount != 0) {
-    --trashZone.employeesAmount;
-    updateTrashZone(trashZone);
-    return trashZone.shops[employeesAmount];
-  }
+  if (trashZone.employeesAmount != 0)
+    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
+      if (trashZone.employees[i])
+        return ++i;
   return -1;
 }

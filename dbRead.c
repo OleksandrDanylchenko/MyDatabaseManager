@@ -132,7 +132,7 @@ employee getEmployeeByKey(int userKey) {
 
 unsigned long getAddressByKey(int userKey, dbFiles fileType) {
   unsigned long address = -1;
-  int recordsNum = getRecordsAmount(fileType);
+  int recordsNum = getRecordsNum(fileType);
   if (userKey - 1 < recordsNum) {
     keyIndex indices[recordsNum];
     readIndices(indices, recordsNum, fileType);

@@ -1,9 +1,9 @@
 #ifndef DATABASES_DBINSERT_H
 #define DATABASES_DBINSERT_H
 
-#include <stdbool.h>
 #include "dbFilesHandler.h"
 #include "dbStructures.h"
+#include <stdbool.h>
 
 void insertM();
 
@@ -17,4 +17,4 @@ employee getNewEmployeeRecord(int colleagueId);
 
 keyIndex getNewDataIndex(dbFiles fileType);
 
-#endif //DATABASES_DBINSERT_H
+#endif // DATABASES_DBINSERT_H

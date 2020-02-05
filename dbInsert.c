@@ -4,6 +4,7 @@
 #include "dbRead.h"
 #include "dbUpdate.h"
 
+// TODO Insetion on inactive pos
 void insertM() {
   if (!validateRecordsAmount(shopsIndices))
     return;
@@ -25,7 +26,7 @@ void insertM() {
 }
 
 shop getNewShopRecord() {
-  shop newShop = {.id = getRecordsAmount(shopsData) + 1,
+  shop newShop = {.id = getRecordsNum(shopsData) + 1,
                   .employeeId = -1,
                   .isActive = true};
   printf("\\\\ New address: ");
@@ -34,11 +35,12 @@ shop getNewShopRecord() {
   return newShop;
 }
 
+// TODO Insetion on inactive pos
 void insertS() {
   if (!validateRecordsAmount(employeesIndices))
     return;
   shop mShop = getM();
-  if(mShop.isActive) {
+  if (mShop.isActive) {
     employee newEmployee = getNewEmployeeRecord(mShop.employeeId);
 
     FILE *outputFile = NULL;
@@ -61,7 +63,7 @@ void insertS() {
 }
 
 employee getNewEmployeeRecord(int colleagueId) {
-  employee newEmployee = {.id = getRecordsAmount(employeesData) + 1,
+  employee newEmployee = {.id = getRecordsNum(employeesData) + 1,
                           .isActive = true,
                           .colleagueId = colleagueId};
   printf("\\\\ Enter credentials of new employee:\n"
@@ -77,7 +79,7 @@ employee getNewEmployeeRecord(int colleagueId) {
 bool validateRecordsAmount(dbFiles fileType) {
   const char *fileNames[] = {"Shops.fl", "Shops.ind", "Employees.fl",
                              "Employees.ind"};
-  if (getRecordsAmount(fileType) >= MAX_RECORDS_AMOUNT) {
+  if (getRecordsNum(fileType) >= MAX_RECORDS_AMOUNT) {
     fprintf(stderr, "\n%s cannot store more than 20 records!\n",
             fileNames[fileType]);
     return false;
@@ -86,10 +88,10 @@ bool validateRecordsAmount(dbFiles fileType) {
 }
 
 keyIndex getNewDataIndex(dbFiles fileType) {
-  keyIndex newShopIndex = {.key = getRecordsAmount(fileType)};
+  keyIndex newShopIndex = {.key = getRecordsNum(fileType)};
   if (fileType == shopsData || fileType == shopsIndices)
-    newShopIndex.address = getRecordsAmount(fileType) * sizeof(shop);
+    newShopIndex.address = getRecordsNum(fileType) * sizeof(shop);
   else
-    newShopIndex.address = getRecordsAmount(fileType) * sizeof(employee);
+    newShopIndex.address = getRecordsNum(fileType) * sizeof(employee);
   return newShopIndex;
 }

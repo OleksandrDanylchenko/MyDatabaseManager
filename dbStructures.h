@@ -18,7 +18,8 @@ typedef struct employee {
   int id;
   char firstName[30];
   char lastName[30];
-  int colleagueId;
+  int prevColleagueId;
+  int nextColleagueId;
   bool isActive;
 } employee;
 

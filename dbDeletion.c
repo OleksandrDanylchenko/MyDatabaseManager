@@ -29,6 +29,6 @@ void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
 
 // TODO
 void delS() {
-  //employee delEmployee =
+  employee delEmployee = getS();
 }
 

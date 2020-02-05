@@ -13,8 +13,16 @@ bool validateRecordsAmount(dbFiles fileType);
 
 shop getNewShopRecord();
 
-employee getNewEmployeeRecord(int colleagueId);
+employee getNewEmployeeRecord(shop mShop);
 
 keyIndex getNewDataIndex(dbFiles fileType);
+
+void insertNewShop();
+
+void insertNewShopIndex();
+
+void insertNewEmployeeRecord(shop mShop);
+
+void insertNewEmployeeIndex();
 
 #endif // DATABASES_DBINSERT_H

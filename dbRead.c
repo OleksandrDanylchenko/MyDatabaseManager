@@ -32,10 +32,10 @@ employee getS() {
         if (employee.id == userKey && employee.isActive) {
           isFounded = true;
           break;
-        } else if (employee.colleagueId == -1)
+        } else if (employee.nextColleagueId == -1)
           break;
         else
-          employee = getEmployeeByKey(employee.colleagueId);
+          employee = getEmployeeByKey(employee.nextColleagueId);
       if (!isFounded)
         fprintf(
             stderr,
@@ -87,9 +87,10 @@ void formatEmployeeOutput(employee outEmployee) {
          "/   Id: %d\t\t/\n"
          "/   First name: %s\t/\n"
          "/   Last name: %s\t/\n"
-         "/   ColleagueId: %d\t/\n\n",
+         "/   PrevColleagueId: %d\t/\n\n"
+         "/   NextColleagueId: %d\t/\n\n",
          outEmployee.id, outEmployee.firstName, outEmployee.lastName,
-         outEmployee.colleagueId);
+         outEmployee.prevColleagueId, outEmployee.nextColleagueId);
 }
 
 int getUserKey(dbFiles fileType) {
@@ -103,10 +104,10 @@ int getUserKey(dbFiles fileType) {
   return key;
 }
 
-shop getShopByKey(int userKey) {
+shop getShopByKey(int key) {
   shop foundedShop = {.isActive = false};
   // TODO Fix doubling
-  unsigned long offset = getAddressByKey(userKey, shopsData);
+  unsigned long offset = getAddressByKey(key, shopsData);
   if (offset != -1) {
     FILE *shopDataFile;
     openDbFile(&shopDataFile, shopsData);
@@ -117,10 +118,10 @@ shop getShopByKey(int userKey) {
   return foundedShop;
 }
 
-employee getEmployeeByKey(int userKey) {
+employee getEmployeeByKey(int key) {
   employee foundedEmployee = {.isActive = false};
   // TODO Fix doubling
-  unsigned long offset = getAddressByKey(userKey, employeesData);
+  unsigned long offset = getAddressByKey(key, employeesData);
   if (offset != -1) {
     FILE *employeeDataFile;
     openDbFile(&employeeDataFile, employeesData);

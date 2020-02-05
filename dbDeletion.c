@@ -9,7 +9,8 @@ void delM() {
     trashZone trashZone = getTrashZoneData();
     if (delShop.employeeId != -1)
       writeShopEmployeesInactive(&trashZone, delShop);
-    updateShopToInactive(delShop);
+    delShop.isActive = false;
+    updateShop(delShop);
     ++trashZone.shopsAmount;
     trashZone.shops[delShop.id - 1] = true;
     updateTrashZone(trashZone);
@@ -21,14 +22,15 @@ void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
   while (true) {
     ++trashZone->employeesAmount;
     trashZone->employees[delEmployee.id - 1] = true;
-    updateEmployeeToInactive(delEmployee);
-    if (delEmployee.colleagueId == -1)
+    delEmployee.isActive = false;
+    updateEmployee(delEmployee);
+    if (delEmployee.nextColleagueId == -1)
       break;
   }
 }
 
 // TODO
 void delS() {
-  employee delEmployee = getS();
+  //employee delEmployee = getS();
 }
 

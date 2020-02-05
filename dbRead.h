@@ -16,7 +16,7 @@ void readIndices(keyIndex *indices, int size, dbFiles fileType);
 
 unsigned long getAddressByKey(int key, dbFiles fileType);
 
-shop getShopByKey(int userKey);
+shop getShopByKey(int key);
 
 employee getEmployeeByKey(int userKey);
 

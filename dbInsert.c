@@ -8,32 +8,10 @@
 void insertM() {
   if (!validateRecordsAmount(shopsIndices))
     return;
-
-  shop newShop = getNewShopRecord();
-  FILE *outputFile = NULL;
-  openDbFile(&outputFile, shopsData);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newShop, sizeof(shop), 1, outputFile);
-  fclose(outputFile);
-
-  keyIndex newShopIndex = getNewDataIndex(shopsData);
-  int recordNum = newShopIndex.key + 1;
-  openDbFile(&outputFile, shopsIndices);
-  fwrite(&recordNum, sizeof(int), 1, outputFile);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
-  fclose(outputFile);
+  insertNewShop();
+  insertNewShopIndex();
 }
 
-shop getNewShopRecord() {
-  shop newShop = {.id = getRecordsNum(shopsData) + 1,
-                  .employeeId = -1,
-                  .isActive = true};
-  printf("\\\\ New address: ");
-  fflush(stdin);
-  gets(newShop.address);
-  return newShop;
-}
 
 // TODO Insetion on inactive pos
 void insertS() {
@@ -41,31 +19,22 @@ void insertS() {
     return;
   shop mShop = getM();
   if (mShop.isActive) {
-    employee newEmployee = getNewEmployeeRecord(mShop.employeeId);
-
-    FILE *outputFile = NULL;
-    openDbFile(&outputFile, employeesData);
-    fseek(outputFile, 0L, SEEK_END);
-    int a = sizeof(employee);
-    fwrite(&newEmployee, sizeof(employee), 1, outputFile);
-    fclose(outputFile);
-
-    keyIndex newEmployeeIndex = getNewDataIndex(employeesData);
-    int recordNum = newEmployeeIndex.key + 1;
-    openDbFile(&outputFile, employeesIndices);
-    fwrite(&recordNum, sizeof(int), 1, outputFile);
-    fseek(outputFile, 0L, SEEK_END);
-    fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
-    fclose(outputFile);
-
-    updateShopEmployeeId(mShop, newEmployee.id);
+    insertNewEmployeeRecord(mShop);
+    insertNewEmployeeIndex();
   }
 }
 
-employee getNewEmployeeRecord(int colleagueId) {
+employee getNewEmployeeRecord(shop mShop) {
   employee newEmployee = {.id = getRecordsNum(employeesData) + 1,
-                          .isActive = true,
-                          .colleagueId = colleagueId};
+                          .prevColleagueId = -1,
+                          .nextColleagueId = mShop.employeeId,
+                          .isActive = true};
+  if (mShop.employeeId != -1) {
+    employee prevEmployee = getEmployeeByKey(mShop.employeeId);
+    prevEmployee.prevColleagueId = newEmployee.id;
+  }
+  // TODO
+
   printf("\\\\ Enter credentials of new employee:\n"
          "\\\\ First name: ");
   fflush(stdin);
@@ -94,4 +63,57 @@ keyIndex getNewDataIndex(dbFiles fileType) {
   else
     newShopIndex.address = getRecordsNum(fileType) * sizeof(employee);
   return newShopIndex;
+}
+
+void insertNewShop() {
+  shop newShop = getNewShopRecord();
+  FILE *outputFile = NULL;
+  openDbFile(&outputFile, shopsData);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newShop, sizeof(shop), 1, outputFile);
+  fclose(outputFile);
+}
+
+shop getNewShopRecord() {
+  shop newShop = {.id = getRecordsNum(shopsData) + 1,
+      .employeeId = -1,
+      .isActive = true};
+  printf("\\\\ New address: ");
+  fflush(stdin);
+  gets(newShop.address);
+  return newShop;
+}
+
+void insertNewEmployeeRecord(shop mShop) {
+  employee newEmployee = getNewEmployeeRecord(mShop);
+  mShop.employeeId = newEmployee.id;
+  updateShop(mShop);
+
+  FILE *outputFile = NULL;
+  openDbFile(&outputFile, employeesData);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newEmployee, sizeof(employee), 1, outputFile);
+  fclose(outputFile);
+}
+
+void insertNewShopIndex() {
+  FILE *outputFile = NULL;
+  keyIndex newShopIndex = getNewDataIndex(shopsData);
+  int recordNum = newShopIndex.key + 1;
+  openDbFile(&outputFile, shopsIndices);
+  fwrite(&recordNum, sizeof(int), 1, outputFile);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
+  fclose(outputFile);
+}
+
+void insertNewEmployeeIndex() {
+  FILE *outputFile = NULL;
+  keyIndex newEmployeeIndex = getNewDataIndex(employeesData);
+  int recordNum = newEmployeeIndex.key + 1;
+  openDbFile(&outputFile, employeesIndices);
+  fwrite(&recordNum, sizeof(int), 1, outputFile);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
+  fclose(outputFile);
 }

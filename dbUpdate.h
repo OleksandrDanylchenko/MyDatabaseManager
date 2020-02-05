@@ -5,13 +5,11 @@
 
 void updateM();
 
-void updateShopEmployeeId(shop changeShop, int newEmployeeId);
-
 void updateS();
 
-void updateShopToInactive(shop delShop);
+void updateShop(shop updShop);
 
-void updateEmployeeToInactive(employee delEmployee);
+void updateEmployee(employee updEmployee);
 
 void updateTrashZone(trashZone trashZoneData);
 

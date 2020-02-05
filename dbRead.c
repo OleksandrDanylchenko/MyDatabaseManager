@@ -105,7 +105,7 @@ int getUserKey(dbFiles fileType) {
 
 shop getShopByKey(int userKey) {
   shop foundedShop = {.isActive = false};
-  // TODO Work with copy
+  // TODO Fix doubling
   unsigned long offset = getAddressByKey(userKey, shopsData);
   if (offset != -1) {
     FILE *shopDataFile;
@@ -119,7 +119,7 @@ shop getShopByKey(int userKey) {
 
 employee getEmployeeByKey(int userKey) {
   employee foundedEmployee = {.isActive = false};
-  // TODO Work with copy
+  // TODO Fix doubling
   unsigned long offset = getAddressByKey(userKey, employeesData);
   if (offset != -1) {
     FILE *employeeDataFile;
@@ -174,6 +174,7 @@ trashZone getTrashZoneData() {
   trashZone trashZone;
 
   FILE *trashZoneFile = NULL;
+  openDbFile(&trashZoneFile, trashZoneData);
   fread(&trashZone, sizeof(trashZone), 1, trashZoneFile);
   fclose(trashZoneFile);
 

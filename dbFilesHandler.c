@@ -12,5 +12,5 @@ void openDbFile(FILE **file, dbFiles fileType) {
     path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.ind";
   else
       path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\trashZone.tr";
-  *file = fopen(path, "r+");
+  *file = fopen(path, "r+b");
 }

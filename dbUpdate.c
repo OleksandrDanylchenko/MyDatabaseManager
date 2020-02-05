@@ -82,6 +82,6 @@ void updateEmployeeToInactive(employee delEmployee) {
 void updateTrashZone(trashZone updTrashZone) {
   FILE *trashZoneFile = NULL;
   openDbFile(&trashZoneFile, trashZoneData);
-  fwrite(&updTrashZone, sizeof(trashZoneData), 1, trashZoneFile);
+  unsigned int writtenBytesNum = fwrite(&updTrashZone, sizeof(trashZone), 1, trashZoneFile);
   fclose(trashZoneFile);
 }

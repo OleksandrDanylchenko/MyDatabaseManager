@@ -3,7 +3,6 @@
 #include "dbRead.h"
 #include "dbUpdate.h"
 
-// TODO Testing
 void delM() {
   shop delShop = getM();
   if (delShop.isActive) {
@@ -11,15 +10,16 @@ void delM() {
     if (delShop.employeeId != -1)
       writeShopEmployeesInactive(&trashZone, delShop);
     updateShopToInactive(delShop);
+    ++trashZone.shopsAmount;
     trashZone.shops[delShop.id - 1] = true;
     updateTrashZone(trashZone);
   }
 }
 
-// TODO Testing
 void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
   employee delEmployee = getEmployeeByKey(delShop.employeeId);
   while (true) {
+    ++trashZone->employeesAmount;
     trashZone->employees[delEmployee.id - 1] = true;
     updateEmployeeToInactive(delEmployee);
     if (delEmployee.colleagueId == -1)

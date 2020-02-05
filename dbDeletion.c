@@ -6,9 +6,9 @@
 
 // TODO
 void delM() {
-  trashZoneData trashZone;
   shop delShop = getM();
   if (delShop.isActive) {
+    trashZoneData trashZone = getTrashZoneData();
     if (delShop.employeeId != -1) {
       int *inactiveEmployees = markShopEmployeesInactive(delShop);
       memcpy(trashZone.trashEmployeeKeys, inactiveEmployees, MAX_RECORDS_AMOUNT);

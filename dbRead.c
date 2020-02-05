@@ -169,12 +169,11 @@ int getRecordsNum(dbFiles fileType) {
   return num;
 }
 
-int getTrashKeysAmount(dbFiles fileType) {
+// TODO
+trashZoneData getTrashZoneData() {
   FILE *trashZoneFile = NULL;
-  int amount = 0;
-  if (fileType == employeesData)
-    fseek(trashZoneFile, sizeof(int), SEEK_SET); // skip shops trash keys num
-  fread(&amount, sizeof(int), 1, trashZoneFile);
+  trashZoneData trashZoneData;
+  fread(&trashZoneData, sizeof(trashZoneData), 1, trashZoneFile);
   fclose(trashZoneFile);
-  return amount;
+  return trashZoneData;
 }

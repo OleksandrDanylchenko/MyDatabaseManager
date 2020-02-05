@@ -20,29 +20,31 @@ shop getM() {
 employee getS() {
   shop mShop = getM();
   employee foundedEmployee = {.isActive = false};
-  if (!mShop.isActive) {
-  } else if (mShop.employeeId == -1)
-    fprintf(stderr, "\n*** Shop on %s doesn't have any employee! ***\n",
-            mShop.address);
-  else {
-    int userKey = getUserKey(employeesData);
-    employee employee = getEmployeeByKey(mShop.employeeId);
-    bool isFounded = false;
-    while (true)
-      if (employee.id == userKey && employee.isActive) {
-        isFounded = true;
-        break;
-      } else if (employee.colleagueId == -1)
-        break;
-      else
-        employee = getEmployeeByKey(employee.colleagueId);
-    if (!isFounded)
-      fprintf(stderr,
-              "\n*** Shop on %s doesn't have employee with ID number %d! ***\n",
-              mShop.address, userKey);
+  if(mShop.isActive) {
+    if (mShop.employeeId == -1)
+      fprintf(stderr, "\n*** Shop on %s doesn't have any employee! ***\n",
+              mShop.address);
     else {
-      formatEmployeeOutput(employee);
-      foundedEmployee = employee;
+      int userKey = getUserKey(employeesData);
+      employee employee = getEmployeeByKey(mShop.employeeId);
+      bool isFounded = false;
+      while (true)
+        if (employee.id == userKey && employee.isActive) {
+          isFounded = true;
+          break;
+        } else if (employee.colleagueId == -1)
+          break;
+        else
+          employee = getEmployeeByKey(employee.colleagueId);
+      if (!isFounded)
+        fprintf(
+            stderr,
+            "\n*** Shop on %s doesn't have employee with ID number %d! ***\n",
+            mShop.address, userKey);
+      else {
+        formatEmployeeOutput(employee);
+        foundedEmployee = employee;
+      }
     }
   }
   return foundedEmployee;

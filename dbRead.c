@@ -20,7 +20,7 @@ shop getM() {
 employee getS() {
   shop mShop = getM();
   employee foundedEmployee = {.isActive = false};
-  if(mShop.isActive) {
+  if (mShop.isActive) {
     if (mShop.employeeId == -1)
       fprintf(stderr, "\n*** Shop on %s doesn't have any employee! ***\n",
               mShop.address);
@@ -130,15 +130,15 @@ employee getEmployeeByKey(int userKey) {
   return foundedEmployee;
 }
 
-unsigned long getAddressByKey(int userKey, dbFiles fileType) {
+unsigned long getAddressByKey(int key, dbFiles fileType) {
   unsigned long address = -1;
   int recordsNum = getRecordsNum(fileType);
-  if (userKey - 1 < recordsNum) {
+  if (key - 1 < recordsNum) {
     keyIndex indices[recordsNum];
     readIndices(indices, recordsNum, fileType);
 
     for (int i = 0; i < recordsNum; ++i)
-      if (indices[i].key == userKey - 1)
+      if (indices[i].key == key - 1)
         address = indices[i].address;
   }
   return address;
@@ -160,7 +160,7 @@ int getRecordsNum(dbFiles fileType) {
   FILE *indicesFile = NULL;
   if (fileType == shopsData || fileType == shopsIndices)
     openDbFile(&indicesFile, shopsIndices);
-  else if(fileType == employeesData || fileType == employeesIndices)
+  else if (fileType == employeesData || fileType == employeesIndices)
     openDbFile(&indicesFile, employeesIndices);
 
   int num = 0;
@@ -176,11 +176,11 @@ trashZoneData getTrashZoneData() {
   fread(&trashZone, sizeof(trashZone), 1, trashZoneFile);
   fclose(trashZoneFile);
 
-  if(trashZone.shopsAmount == 0)
-    for(int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
-      trashZone.shops[i] = false;
   if (trashZone.shopsAmount == 0)
-    for(int j = 0; j < MAX_RECORDS_AMOUNT; ++j)
+    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
+      trashZone.shops[i] = false;
+  if (trashZone.employeesAmount == 0)
+    for (int j = 0; j < MAX_RECORDS_AMOUNT; ++j)
       trashZone.employees[j] = false;
 
   return trashZone;

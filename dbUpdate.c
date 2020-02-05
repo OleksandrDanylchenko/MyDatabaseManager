@@ -34,22 +34,48 @@ void updateShopEmployeeId(shop changeShop, int newEmployeeId) {
 }
 
 void updateS() {
-    employee updEmployee = getS();
-    if (updEmployee.isActive) {
-        printf("\\\\ Enter new first name: ");
-        fflush(stdin);
-        gets(updEmployee.firstName);
+  employee updEmployee = getS();
+  if (updEmployee.isActive) {
+    printf("\\\\ Enter new first name: ");
+    fflush(stdin);
+    gets(updEmployee.firstName);
 
-        printf("\\\\ Enter new last name: ");
-        fflush(stdin);
-        gets(updEmployee.lastName);
+    printf("\\\\ Enter new last name: ");
+    fflush(stdin);
+    gets(updEmployee.lastName);
 
-        // TODO Fix doubling
-        FILE *employeesDataFile;
-        openDbFile(&employeesDataFile, employeesData);
-        unsigned long employeeAddress = getAddressByKey(updEmployee.id, employeesData);
-        fseek(employeesDataFile, (long)employeeAddress, SEEK_SET);
-        fwrite(&updEmployee, sizeof(shop), 1, employeesDataFile);
-        fclose(employeesDataFile);
-    }
+    // TODO Fix doubling
+    FILE *employeesDataFile;
+    openDbFile(&employeesDataFile, employeesData);
+    unsigned long employeeAddress =
+        getAddressByKey(updEmployee.id, employeesData);
+    fseek(employeesDataFile, (long)employeeAddress, SEEK_SET);
+    fwrite(&updEmployee, sizeof(shop), 1, employeesDataFile);
+    fclose(employeesDataFile);
+  }
+}
+
+void writeShopInactive(shop delShop) {
+  delShop.isActive = false;
+
+  // TODO Fix doubling
+  FILE *shopDataFile;
+  openDbFile(&shopDataFile, shopsData);
+  unsigned long shopAddress = getAddressByKey(delShop.id, shopsData);
+  fseek(shopDataFile, (long)shopAddress, SEEK_SET);
+  fwrite(&delShop, sizeof(shop), 1, shopDataFile);
+  fclose(shopDataFile);
+}
+
+// TODO
+void writeEmployeeInactive(employee delEmployee) {
+  delEmployee.isActive = false;
+
+  // TODO Fix doubling
+  FILE *employeeDataFile;
+  openDbFile(&employeeDataFile, employeesData);
+  unsigned long employeeAddress = getAddressByKey(delEmployee.id, shopsData);
+  fseek(employeeDataFile, (long)employeeAddress, SEEK_SET);
+  fwrite(&delEmployee, sizeof(employee), 1, employeeDataFile);
+  fclose(employeeDataFile);
 }

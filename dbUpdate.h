@@ -10,9 +10,9 @@ void updateShopEmployeeId(shop changeShop, int newEmployeeId);
 void updateS();
 
 // TODO
-void markShopInactive(shop delShop);
+void writeShopInactive(shop delShop);
 
 // TODO
-void markEmployeeInactive(employee delEmployee);
+void writeEmployeeInactive(employee delEmployee);
 
 #endif // DATABASES_DBUPDATE_H

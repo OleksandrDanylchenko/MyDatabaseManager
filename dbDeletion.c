@@ -8,19 +8,18 @@ void delM() {
   shop delShop = getM();
   if (delShop.isActive) {
     trashZoneData trashZone = getTrashZoneData();
-    if (delShop.employeeId != -1) {
-      markShopEmployeesInactive(&trashZone, delShop);
-    }
-    markShopInactive(delShop);
+    if (delShop.employeeId != -1)
+      writeShopEmployeesInactive(&trashZone, delShop);
+    writeShopInactive(delShop);
   }
 }
 
 // TODO Testing
-void markShopEmployeesInactive(trashZoneData *trashZone, shop delShop) {
+void writeShopEmployeesInactive(trashZoneData *trashZone, shop delShop) {
   employee delEmployee = getEmployeeByKey(delShop.employeeId);
   while (true) {
     trashZone->employees[delEmployee.id] = true;
-    markEmployeeInactive(delEmployee);
+    writeEmployeeInactive(delEmployee);
     if (delEmployee.colleagueId == -1)
       break;
   }

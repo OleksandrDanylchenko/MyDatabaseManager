@@ -9,7 +9,7 @@ void delM();
 
 void delS();
 
-int *markShopEmployeesInactive(shop delShop);
+void markShopEmployeesInactive(trashZoneData *trashZone, shop delShop);
 
 
 

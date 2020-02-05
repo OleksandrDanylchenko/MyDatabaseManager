@@ -2,7 +2,6 @@
 #include "dbDeletion.h"
 #include "dbRead.h"
 #include "dbUpdate.h"
-#include <string.h>
 
 // TODO
 void delM() {
@@ -10,18 +9,22 @@ void delM() {
   if (delShop.isActive) {
     trashZoneData trashZone = getTrashZoneData();
     if (delShop.employeeId != -1) {
-      int *inactiveEmployees = markShopEmployeesInactive(delShop);
-      memcpy(trashZone.trashEmployeeKeys, inactiveEmployees, MAX_RECORDS_AMOUNT);
+      markShopEmployeesInactive(&trashZone, delShop);
     }
-    //markShopInactive(delShop);
+    markShopInactive(delShop);
   }
 }
 
-int *markShopEmployeesInactive(shop delShop) {
-  static int inactiveEmployees[MAX_RECORDS_AMOUNT];
+// TODO Testing
+void markShopEmployeesInactive(trashZoneData *trashZone, shop delShop) {
+  employee delEmployee = getEmployeeByKey(delShop.employeeId);
+  while (true) {
+    trashZone->employees[delEmployee.id] = true;
+    markEmployeeInactive(delEmployee);
+    if (delEmployee.colleagueId == -1)
+      break;
+  }
 }
 
 // TODO
 void delS() {}
-
-

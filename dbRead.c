@@ -170,12 +170,18 @@ int getRecordsNum(dbFiles fileType) {
 }
 
 trashZoneData getTrashZoneData() {
-  FILE *trashZoneFile = NULL;
-  trashZoneData trashZoneData;
-  fread(&trashZoneData, sizeof(trashZoneData), 1, trashZoneFile);
-  fclose(trashZoneFile);
-  if(trashZoneData.shopsAmount == 0)
-    trashZoneData.trashShops = {};
+  trashZoneData trashZone;
 
-  return trashZoneData;
+  FILE *trashZoneFile = NULL;
+  fread(&trashZone, sizeof(trashZone), 1, trashZoneFile);
+  fclose(trashZoneFile);
+
+  if(trashZone.shopsAmount == 0)
+    for(int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
+      trashZone.shops[i] = false;
+  if (trashZone.shopsAmount == 0)
+    for(int j = 0; j < MAX_RECORDS_AMOUNT; ++j)
+      trashZone.employees[j] = false;
+
+  return trashZone;
 }

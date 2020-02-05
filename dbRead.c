@@ -169,11 +169,13 @@ int getRecordsNum(dbFiles fileType) {
   return num;
 }
 
-// TODO
 trashZoneData getTrashZoneData() {
   FILE *trashZoneFile = NULL;
   trashZoneData trashZoneData;
   fread(&trashZoneData, sizeof(trashZoneData), 1, trashZoneFile);
   fclose(trashZoneFile);
+  if(trashZoneData.shopsAmount == 0)
+    trashZoneData.trashShops = {};
+
   return trashZoneData;
 }

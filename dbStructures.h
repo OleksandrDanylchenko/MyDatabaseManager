@@ -32,8 +32,8 @@ typedef struct keyIndex {
 typedef struct trashKeys {
   int shopsAmount;
   int employeesAmount;
-  int trashShops[MAX_RECORDS_AMOUNT];
-  int trashEmployees[MAX_RECORDS_AMOUNT];
+  bool trashShops[MAX_RECORDS_AMOUNT];
+  bool trashEmployees[MAX_RECORDS_AMOUNT];
 } trashZoneData;
 
 #endif // DATABASES_DBSTRUCTURES_H

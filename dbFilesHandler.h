@@ -7,7 +7,8 @@ typedef enum dbFiles {
   shopsData,
   shopsIndices,
   employeesData,
-  employeesIndices
+  employeesIndices,
+  trashKeys
 } dbFiles;
 
 void openDbFile(FILE **file, dbFiles fileType);

@@ -28,4 +28,10 @@ typedef struct keyIndex {
   unsigned long address;
 } keyIndex;
 
+#pragma pack(1)
+typedef struct trashKeys {
+  int trashShopKeys[MAX_RECORDS_AMOUNT];
+  int trashEmployeeKeys[MAX_RECORDS_AMOUNT];
+} trashZoneData;
+
 #endif // DATABASES_DBSTRUCTURES_H

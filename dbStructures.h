@@ -30,6 +30,8 @@ typedef struct keyIndex {
 
 #pragma pack(1)
 typedef struct trashKeys {
+  int shopsAmount;
+  int employeesAmount;
   int trashShopKeys[MAX_RECORDS_AMOUNT];
   int trashEmployeeKeys[MAX_RECORDS_AMOUNT];
 } trashZoneData;

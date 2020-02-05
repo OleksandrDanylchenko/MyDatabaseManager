@@ -11,6 +11,6 @@ void delS();
 
 int *markShopEmployeesInactive(shop delShop);
 
-int getTrashKeysAmount(dbFiles fileType);
+
 
 #endif // DATABASES_DBDELETION_H

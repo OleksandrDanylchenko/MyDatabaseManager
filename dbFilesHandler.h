@@ -13,6 +13,6 @@ typedef enum dbFiles {
 
 void openDbFile(FILE **file, dbFiles fileType);
 
-int getRecordsNum(dbFiles fileType);
+
 
 #endif // DATABASES_FILESHANDLER_H

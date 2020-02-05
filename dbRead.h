@@ -24,4 +24,8 @@ void formatShopOutput(shop outShop);
 
 void formatEmployeeOutput(employee outEmployee);
 
+int getRecordsNum(dbFiles fileType);
+
+int getTrashZoneData(dbFiles fileType);
+
 #endif // DATABASES_DBREAD_H

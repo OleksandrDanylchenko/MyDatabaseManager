@@ -11,19 +11,6 @@ void openDbFile(FILE **file, dbFiles fileType) {
   else if (fileType == employeesIndices)
     path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\Employees.ind";
   else
-      path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\trashKeys.tr";
+      path = "D:\\Studying\\2_Course\\DataBases\\LaboratoryWork1\\trashZone.tr";
   *file = fopen(path, "r+");
-}
-
-int getRecordsNum(dbFiles fileType) {
-  FILE *indicesFile = NULL;
-  if (fileType == shopsData || fileType == shopsIndices)
-    openDbFile(&indicesFile, shopsIndices);
-  else if(fileType == employeesData || fileType == employeesIndices)
-    openDbFile(&indicesFile, employeesIndices);
-
-  int num = 0;
-  fread(&num, sizeof(int), 1, indicesFile);
-  fclose(indicesFile);
-  return num;
 }

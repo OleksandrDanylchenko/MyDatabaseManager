@@ -155,3 +155,26 @@ void readIndices(keyIndex *indices, int size, dbFiles fileType) {
   fread(indices, sizeof(keyIndex), size, indicesFile);
   fclose(indicesFile);
 }
+
+int getRecordsNum(dbFiles fileType) {
+  FILE *indicesFile = NULL;
+  if (fileType == shopsData || fileType == shopsIndices)
+    openDbFile(&indicesFile, shopsIndices);
+  else if(fileType == employeesData || fileType == employeesIndices)
+    openDbFile(&indicesFile, employeesIndices);
+
+  int num = 0;
+  fread(&num, sizeof(int), 1, indicesFile);
+  fclose(indicesFile);
+  return num;
+}
+
+int getTrashKeysAmount(dbFiles fileType) {
+  FILE *trashZoneFile = NULL;
+  int amount = 0;
+  if (fileType == employeesData)
+    fseek(trashZoneFile, sizeof(int), SEEK_SET); // skip shops trash keys num
+  fread(&amount, sizeof(int), 1, trashZoneFile);
+  fclose(trashZoneFile);
+  return amount;
+}

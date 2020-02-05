@@ -20,6 +20,7 @@ typedef struct employee {
   char lastName[30];
   int prevColleagueId;
   int nextColleagueId;
+  int shopId;
   bool isActive;
 } employee;
 

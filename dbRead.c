@@ -87,10 +87,12 @@ void formatEmployeeOutput(employee outEmployee) {
          "/   Id: %d\t\t/\n"
          "/   First name: %s\t/\n"
          "/   Last name: %s\t/\n"
-         "/   PrevColleagueId: %d\t/\n\n"
-         "/   NextColleagueId: %d\t/\n\n",
+         "/   PrevColleagueId: %d\t/\n"
+         "/   NextColleagueId: %d\t/\n"
+         "/   ShopId: %d\t/\n\n",
          outEmployee.id, outEmployee.firstName, outEmployee.lastName,
-         outEmployee.prevColleagueId, outEmployee.nextColleagueId);
+         outEmployee.prevColleagueId, outEmployee.nextColleagueId,
+         outEmployee.shopId);
 }
 
 int getUserKey(dbFiles fileType) {

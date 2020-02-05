@@ -17,12 +17,16 @@ employee getNewEmployeeRecord(shop mShop);
 
 keyIndex getNewDataIndex(dbFiles fileType);
 
-void insertNewShop();
+void insertNewShopRecord(int id);
 
 void insertNewShopIndex();
 
 void insertNewEmployeeRecord(shop mShop);
 
 void insertNewEmployeeIndex();
+
+int geShopTrashKey() {
+
+}
 
 #endif // DATABASES_DBINSERT_H

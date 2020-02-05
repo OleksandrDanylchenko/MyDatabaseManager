@@ -29,8 +29,19 @@ void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
   }
 }
 
-// TODO
+// TODO Testing
 void delS() {
-  //employee delEmployee = getS();
+  employee delEmployee = getS();
+  delEmployee.isActive = false;
+  updateEmployee(delEmployee);
+  if (delEmployee.prevColleagueId == -1 && delEmployee.nextColleagueId != -1) {
+    shop mShop = getShopByKey(delEmployee.shopId);
+    mShop.employeeId = delEmployee.nextColleagueId;
+    updateShop(mShop);
+  } else if (delEmployee.prevColleagueId != -1 && delEmployee.nextColleagueId != -1) {
+    employee prevColleague = getEmployeeByKey(delEmployee.prevColleagueId);
+    employee nextColleague = getEmployeeByKey(delEmployee.nextColleagueId);
+    prevColleague.nextColleagueId = nextColleague.id;
+    updateEmployee(prevColleague);
+  }
 }
-

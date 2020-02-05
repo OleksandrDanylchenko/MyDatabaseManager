@@ -6,9 +6,11 @@
 
 // TODO Insetion on inactive pos
 void insertM() {
-  if (!validateRecordsAmount(shopsIndices))
+  if (!validateRecordsAmount(shopsIndices)) {
+
     return;
-  insertNewShop();
+  }
+  insertNewShopRecord(-1);
   insertNewShopIndex();
 }
 
@@ -32,9 +34,8 @@ employee getNewEmployeeRecord(shop mShop) {
   if (mShop.employeeId != -1) {
     employee prevEmployee = getEmployeeByKey(mShop.employeeId);
     prevEmployee.prevColleagueId = newEmployee.id;
+    updateEmployee(prevEmployee);
   }
-  // TODO
-
   printf("\\\\ Enter credentials of new employee:\n"
          "\\\\ First name: ");
   fflush(stdin);
@@ -65,7 +66,8 @@ keyIndex getNewDataIndex(dbFiles fileType) {
   return newShopIndex;
 }
 
-void insertNewShop() {
+// TODO ID Tracking
+void insertNewShopRecord(int id) {
   shop newShop = getNewShopRecord();
   FILE *outputFile = NULL;
   openDbFile(&outputFile, shopsData);
@@ -84,6 +86,8 @@ shop getNewShopRecord() {
   return newShop;
 }
 
+
+// TODO ID Tracking
 void insertNewEmployeeRecord(shop mShop) {
   employee newEmployee = getNewEmployeeRecord(mShop);
   mShop.employeeId = newEmployee.id;

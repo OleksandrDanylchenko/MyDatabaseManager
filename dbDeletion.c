@@ -7,7 +7,7 @@
 void delM() {
   shop delShop = getM();
   if (delShop.isActive) {
-    trashZoneData trashZone = getTrashZoneData();
+    trashZone trashZone = getTrashZoneData();
     if (delShop.employeeId != -1)
       writeShopEmployeesInactive(&trashZone, delShop);
     updateShopToInactive(delShop);
@@ -17,7 +17,7 @@ void delM() {
 }
 
 // TODO Testing
-void writeShopEmployeesInactive(trashZoneData *trashZone, shop delShop) {
+void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
   employee delEmployee = getEmployeeByKey(delShop.employeeId);
   while (true) {
     trashZone->employees[delEmployee.id - 1] = true;

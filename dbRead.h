@@ -26,6 +26,6 @@ void formatEmployeeOutput(employee outEmployee);
 
 int getRecordsNum(dbFiles fileType);
 
-trashZoneData getTrashZoneData();
+trashZone getTrashZoneData();
 
 #endif // DATABASES_DBREAD_H

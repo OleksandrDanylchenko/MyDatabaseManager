@@ -170,7 +170,7 @@ int getRecordsNum(dbFiles fileType) {
   return num;
 }
 
-trashZoneData getTrashZoneData() {
+trashZone getTrashZoneData() {
   trashZone trashZone;
 
   FILE *trashZoneFile = NULL;

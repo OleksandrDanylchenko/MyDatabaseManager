@@ -115,7 +115,6 @@ int getUserKey(dbFiles fileType) {
 
 shop getShopByKey(int key) {
   shop foundedShop = {.isActive = false};
-  // TODO Fix doubling
   unsigned long offset = getAddressByKey(key, shopsData);
   if (offset != -1) {
     FILE *shopDataFile;
@@ -129,7 +128,6 @@ shop getShopByKey(int key) {
 
 employee getEmployeeByKey(int key) {
   employee foundedEmployee = {.isActive = false};
-  // TODO Fix doubling
   unsigned long offset = getAddressByKey(key, employeesData);
   if (offset != -1) {
     FILE *employeeDataFile;

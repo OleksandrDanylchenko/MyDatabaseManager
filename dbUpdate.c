@@ -42,7 +42,7 @@ void updateShop(const shop *updShop) {
   openDbFile(&shopDataFile, shopsData);
   unsigned long shopAddress = getAddressByKey(updShop->id, shopsData);
   fseek(shopDataFile, (long)shopAddress, SEEK_SET);
-  fwrite(&updShop, sizeof(shop), 1, shopDataFile);
+  fwrite(&*updShop, sizeof(shop), 1, shopDataFile);
   fclose(shopDataFile);
 }
 
@@ -52,13 +52,13 @@ void updateEmployee(const employee *updEmployee) {
   unsigned long employeeAddress =
       getAddressByKey(updEmployee->id, employeesData);
   fseek(employeeDataFile, (long)employeeAddress, SEEK_SET);
-  fwrite(&updEmployee, sizeof(employee), 1, employeeDataFile);
+  fwrite(&*updEmployee, sizeof(employee), 1, employeeDataFile);
   fclose(employeeDataFile);
 }
 
 void updateTrashZone(const trashZone *updTrashZone) {
   FILE *trashZoneFile = NULL;
   openDbFile(&trashZoneFile, trashZoneData);
-  fwrite(&updTrashZone, sizeof(trashZone), 1, trashZoneFile);
+  fwrite(&*updTrashZone, sizeof(trashZone), 1, trashZoneFile);
   fclose(trashZoneFile);
 }

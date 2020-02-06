@@ -28,4 +28,8 @@ int getRecordsNum(dbFiles fileType);
 
 trashZone getTrashZoneData();
 
+int getShopTrashKey();
+
+int getEmployeeTrashKey();
+
 #endif // DATABASES_DBREAD_H

@@ -50,34 +50,37 @@ keyIndex getNewDataIndex(dbFiles fileType) {
 
 void insertNewShopRecord(int id) {
   shop newShop = getNewShopRecord();
-  if (id != -1)
+  if (id != -1) {
     newShop.id = id;
-
+    updateShop(newShop);
+  } else {
+    FILE *outputFile = NULL;
+    openDbFile(&outputFile, shopsData);
+    fseek(outputFile, 0L, SEEK_END);
+    fwrite(&newShop, sizeof(shop), 1, outputFile);
+    fclose(outputFile);
+  }
   printf("\n\n/   Added shop:\t\t/\n");
   formatShopOutput(newShop);
-
-  FILE *outputFile = NULL;
-  openDbFile(&outputFile, shopsData);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newShop, sizeof(shop), 1, outputFile);
-  fclose(outputFile);
 }
 
 void insertNewEmployeeRecord(shop mShop, int id) {
   employee newEmployee = getNewEmployeeRecord(mShop);
-  if (id != -1)
+  if (id != -1) {
     newEmployee.id = id;
+    updateEmployee(newEmployee);
+  } else {
+    FILE *outputFile = NULL;
+    openDbFile(&outputFile, employeesData);
+    fseek(outputFile, 0L, SEEK_END);
+    fwrite(&newEmployee, sizeof(employee), 1, outputFile);
+    fclose(outputFile);
+  }
   mShop.employeeId = newEmployee.id;
   updateShop(mShop);
 
   printf("\n\n/   Added employee:\t/\n");
   formatEmployeeOutput(newEmployee);
-
-  FILE *outputFile = NULL;
-  openDbFile(&outputFile, employeesData);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newEmployee, sizeof(employee), 1, outputFile);
-  fclose(outputFile);
 }
 
 shop getNewShopRecord() {
@@ -130,28 +133,4 @@ void insertNewEmployeeIndex() {
   fseek(outputFile, 0L, SEEK_END);
   fwrite(&newEmployeeIndex, sizeof(keyIndex), 1, outputFile);
   fclose(outputFile);
-}
-
-int getShopTrashKey() {
-  trashZone trashZone = getTrashZoneData();
-  if (trashZone.shopsAmount != 0)
-    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
-      if (trashZone.shops[i]) {
-        --trashZone.shopsAmount;
-        updateTrashZone(trashZone);
-        return ++i;
-      }
-  return -1;
-}
-
-int getEmployeeTrashKey() {
-  trashZone trashZone = getTrashZoneData();
-  if (trashZone.employeesAmount != 0)
-    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
-      if (trashZone.employees[i]) {
-        --trashZone.employeesAmount;
-        updateTrashZone(trashZone);
-        return ++i;
-      }
-  return -1;
 }

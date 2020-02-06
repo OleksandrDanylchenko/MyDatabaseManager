@@ -6,6 +6,7 @@
 #include "dbFilesHandler.h"
 #include "dbRead.h"
 #include "dbStructures.h"
+#include "dbUpdate.h"
 
 shop getM() {
   int userKey = getUserKey(shopsData);
@@ -74,7 +75,7 @@ void getAll() {
     fread(&outEmployee, sizeof(employee), 1, outputFile);
     if (feof(outputFile))
       break;
-    if(outEmployee.isActive) {
+    if (outEmployee.isActive) {
       printf("\n\n/   Employee:\t\t/\n");
       formatEmployeeOutput(outEmployee);
     }
@@ -185,7 +186,7 @@ trashZone getTrashZoneData() {
   FILE *trashZoneFile = NULL;
   openDbFile(&trashZoneFile, trashZoneData);
   fread(&trashZone, sizeof(trashZone), 1, trashZoneFile);
-  fseek (trashZoneFile, 0L, SEEK_END);
+  fseek(trashZoneFile, 0L, SEEK_END);
   int fileSize = ftell(trashZoneFile);
   if (fileSize == 0) {
     trashZone.shopsAmount = 0;
@@ -201,4 +202,28 @@ trashZone getTrashZoneData() {
       trashZone.employees[j] = false;
 
   return trashZone;
+}
+
+int getShopTrashKey() {
+  trashZone trashZone = getTrashZoneData();
+  if (trashZone.shopsAmount != 0)
+    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
+      if (trashZone.shops[i]) {
+        --trashZone.shopsAmount;
+        updateTrashZone(trashZone);
+        return ++i;
+      }
+  return -1;
+}
+
+int getEmployeeTrashKey() {
+  trashZone trashZone = getTrashZoneData();
+  if (trashZone.employeesAmount != 0)
+    for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
+      if (trashZone.employees[i]) {
+        --trashZone.employeesAmount;
+        updateTrashZone(trashZone);
+        return ++i;
+      }
+  return -1;
 }

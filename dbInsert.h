@@ -25,8 +25,4 @@ void insertNewEmployeeRecord(shop mShop, int id);
 
 void insertNewEmployeeIndex();
 
-int getShopTrashKey();
-
-int getEmployeeTrashKey();
-
 #endif // DATABASES_DBINSERT_H

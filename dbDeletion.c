@@ -14,6 +14,7 @@ void delM() {
     ++trashZone.shopsAmount;
     trashZone.shops[delShop.id - 1] = true;
     updateTrashZone(trashZone);
+    printf("\n\\   Deletion successful\t\\\n");
   }
 }
 
@@ -39,10 +40,18 @@ void delS() {
     shop mShop = getShopByKey(delEmployee.shopId);
     mShop.employeeId = delEmployee.nextColleagueId;
     updateShop(mShop);
+
+    employee nextEmployee = getEmployeeByKey(delEmployee.nextColleagueId);
+    nextEmployee.prevColleagueId = -1;
+    updateEmployee(nextEmployee);
   } else if (delEmployee.prevColleagueId != -1 && delEmployee.nextColleagueId != -1) {
     employee prevColleague = getEmployeeByKey(delEmployee.prevColleagueId);
-    employee nextColleague = getEmployeeByKey(delEmployee.nextColleagueId);
-    prevColleague.nextColleagueId = nextColleague.id;
+    prevColleague.nextColleagueId = delEmployee.nextColleagueId;
+    updateEmployee(prevColleague);
+  } else {
+    employee prevColleague = getEmployeeByKey(delEmployee.prevColleagueId);
+    prevColleague.nextColleagueId = -1;
     updateEmployee(prevColleague);
   }
+  printf("\n\\   Deletion successful\t\\\n");
 }

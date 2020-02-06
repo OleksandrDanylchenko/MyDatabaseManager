@@ -12,6 +12,9 @@ void updateM() {
     fflush(stdin);
     gets(updShop.address);
 
+    printf("\n\n/   Updated shop:\t/\n");
+    formatShopOutput(updShop);
+
     updateShop(updShop);
   }
 }
@@ -26,6 +29,9 @@ void updateS() {
     printf("\\\\ Enter new last name: ");
     fflush(stdin);
     gets(updEmployee.lastName);
+
+    printf("\n\n/   Updated employee:\t/\n");
+    formatEmployeeOutput(updEmployee);
 
     updateEmployee(updEmployee);
   }

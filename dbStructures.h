@@ -2,10 +2,9 @@
 #define DATABASES_DBSTRUCTURES_H
 
 #define MAX_RECORDS_AMOUNT 20
-
-#pragma pack(1)
 #include <stdbool.h>
 
+#pragma pack(1)
 typedef struct shop {
   int id;
   char address[70];

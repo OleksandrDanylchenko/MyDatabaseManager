@@ -53,10 +53,30 @@ void insertNewShopRecord(int id) {
   if (id != -1)
     newShop.id = id;
 
+  printf("\n\n/   Added shop:\t\t/\n");
+  formatShopOutput(newShop);
+
   FILE *outputFile = NULL;
   openDbFile(&outputFile, shopsData);
   fseek(outputFile, 0L, SEEK_END);
   fwrite(&newShop, sizeof(shop), 1, outputFile);
+  fclose(outputFile);
+}
+
+void insertNewEmployeeRecord(shop mShop, int id) {
+  employee newEmployee = getNewEmployeeRecord(mShop);
+  if (id != -1)
+    newEmployee.id = id;
+  mShop.employeeId = newEmployee.id;
+  updateShop(mShop);
+
+  printf("\n\n/   Added employee:\t/\n");
+  formatEmployeeOutput(newEmployee);
+
+  FILE *outputFile = NULL;
+  openDbFile(&outputFile, employeesData);
+  fseek(outputFile, 0L, SEEK_END);
+  fwrite(&newEmployee, sizeof(employee), 1, outputFile);
   fclose(outputFile);
 }
 
@@ -67,20 +87,6 @@ shop getNewShopRecord() {
   fflush(stdin);
   gets(newShop.address);
   return newShop;
-}
-
-void insertNewEmployeeRecord(shop mShop, int id) {
-  employee newEmployee = getNewEmployeeRecord(mShop);
-  if (id != -1)
-    newEmployee.id = id;
-  mShop.employeeId = newEmployee.id;
-  updateShop(mShop);
-
-  FILE *outputFile = NULL;
-  openDbFile(&outputFile, employeesData);
-  fseek(outputFile, 0L, SEEK_END);
-  fwrite(&newEmployee, sizeof(employee), 1, outputFile);
-  fclose(outputFile);
 }
 
 void insertNewShopIndex() {
@@ -96,10 +102,10 @@ void insertNewShopIndex() {
 
 employee getNewEmployeeRecord(shop mShop) {
   employee newEmployee = {.id = getRecordsNum(employeesData) + 1,
-      .prevColleagueId = -1,
-      .nextColleagueId = mShop.employeeId,
-      .shopId = mShop.id,
-      .isActive = true};
+                          .prevColleagueId = -1,
+                          .nextColleagueId = mShop.employeeId,
+                          .shopId = mShop.id,
+                          .isActive = true};
   if (mShop.employeeId != -1) {
     employee prevEmployee = getEmployeeByKey(mShop.employeeId);
     prevEmployee.prevColleagueId = newEmployee.id;
@@ -130,8 +136,11 @@ int getShopTrashKey() {
   trashZone trashZone = getTrashZoneData();
   if (trashZone.shopsAmount != 0)
     for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
-      if (trashZone.shops[i])
+      if (trashZone.shops[i]) {
+        --trashZone.shopsAmount;
+        updateTrashZone(trashZone);
         return ++i;
+      }
   return -1;
 }
 
@@ -139,7 +148,10 @@ int getEmployeeTrashKey() {
   trashZone trashZone = getTrashZoneData();
   if (trashZone.employeesAmount != 0)
     for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
-      if (trashZone.employees[i])
+      if (trashZone.employees[i]) {
+        --trashZone.employeesAmount;
+        updateTrashZone(trashZone);
         return ++i;
+      }
   return -1;
 }

@@ -20,9 +20,9 @@ shop getShopByKey(int key);
 
 employee getEmployeeByKey(int userKey);
 
-void formatShopOutput(shop outShop);
+void formatShopOutput(const shop *outShop);
 
-void formatEmployeeOutput(employee outEmployee);
+void formatEmployeeOutput(const employee *outEmployee);
 
 int getRecordsNum(dbFiles fileType);
 

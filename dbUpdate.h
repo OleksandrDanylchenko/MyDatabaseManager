@@ -5,12 +5,12 @@
 
 void updateM();
 
+void updateShop(const shop *updShop);
+
 void updateS();
 
-void updateShop(shop updShop);
+void updateEmployee(const employee *updEmployee);
 
-void updateEmployee(employee updEmployee);
-
-void updateTrashZone(trashZone trashZoneData);
+void updateTrashZone(const trashZone *updTrashZone);
 
 #endif // DATABASES_DBUPDATE_H

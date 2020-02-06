@@ -7,22 +7,22 @@
 
 void insertM();
 
-void insertS();
-
-bool validateRecordsAmount(dbFiles fileType);
+void insertNewShopRecord(int id);
 
 shop getNewShopRecord();
 
-employee getNewEmployeeRecord(shop mShop);
-
-keyIndex getNewDataIndex(dbFiles fileType);
-
-void insertNewShopRecord(int id);
-
 void insertNewShopIndex();
 
-void insertNewEmployeeRecord(shop mShop, int id);
+void insertS();
+
+employee getNewEmployeeRecord(const shop *mShop);
+
+void insertNewEmployeeRecord(shop *mShop, int id);
 
 void insertNewEmployeeIndex();
+
+bool validateRecordsAmount(dbFiles fileType);
+
+keyIndex getNewDataIndex(dbFiles fileType);
 
 #endif // DATABASES_DBINSERT_H

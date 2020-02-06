@@ -15,7 +15,7 @@ shop getM() {
     fprintf(stderr, "\n*** Cannot find record in Shop.fl! ***\n");
   else {
     printf("\n\n/   Founded shop:\t/\n");
-    formatShopOutput(foundedShop);
+    formatShopOutput(&foundedShop);
   }
   return foundedShop;
 }
@@ -46,7 +46,7 @@ employee getS() {
             mShop.address, userKey);
       else {
         printf("\n\n/   Founded employee:\t/\n");
-        formatEmployeeOutput(employee);
+        formatEmployeeOutput(&employee);
         foundedEmployee = employee;
       }
     }
@@ -64,7 +64,7 @@ void getAll() {
       break;
     if (outShop.isActive) {
       printf("\n\n/   Shop:\t\t/\n");
-      formatShopOutput(outShop);
+      formatShopOutput(&outShop);
     }
   }
   fclose(outputFile);
@@ -77,29 +77,29 @@ void getAll() {
       break;
     if (outEmployee.isActive) {
       printf("\n\n/   Employee:\t\t/\n");
-      formatEmployeeOutput(outEmployee);
+      formatEmployeeOutput(&outEmployee);
     }
   }
   fclose(outputFile);
 }
 
-void formatShopOutput(shop outShop) {
+void formatShopOutput(const shop *outShop) {
   printf("/   Id: %d\t\t/\n"
          "/   Address: %s\t/\n"
          "/   EmployeeId: %d\t/\n\n",
-         outShop.id, outShop.address, outShop.employeeId);
+         outShop->id, outShop->address, outShop->employeeId);
 }
 
-void formatEmployeeOutput(employee outEmployee) {
+void formatEmployeeOutput(const employee *outEmployee) {
   printf("/   Id: %d\t\t/\n"
          "/   First name: %s\t/\n"
          "/   Last name: %s\t/\n"
          "/   PrevColleagueId: %d\t/\n"
          "/   NextColleagueId: %d\t/\n"
          "/   ShopId: %d\t/\n\n",
-         outEmployee.id, outEmployee.firstName, outEmployee.lastName,
-         outEmployee.prevColleagueId, outEmployee.nextColleagueId,
-         outEmployee.shopId);
+         outEmployee->id, outEmployee->firstName, outEmployee->lastName,
+         outEmployee->prevColleagueId, outEmployee->nextColleagueId,
+         outEmployee->shopId);
 }
 
 int getUserKey(dbFiles fileType) {
@@ -210,7 +210,7 @@ int getShopTrashKey() {
     for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
       if (trashZone.shops[i]) {
         --trashZone.shopsAmount;
-        updateTrashZone(trashZone);
+        updateTrashZone(&trashZone);
         return ++i;
       }
   return -1;
@@ -222,7 +222,7 @@ int getEmployeeTrashKey() {
     for (int i = 0; i < MAX_RECORDS_AMOUNT; ++i)
       if (trashZone.employees[i]) {
         --trashZone.employeesAmount;
-        updateTrashZone(trashZone);
+        updateTrashZone(&trashZone);
         return ++i;
       }
   return -1;

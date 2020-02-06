@@ -9,6 +9,6 @@ void delM();
 
 void delS();
 
-void writeShopEmployeesInactive(trashZone *trashZone, shop delShop);
+void writeShopEmployeesInactive(trashZone *trashZone, const shop *delShop);
 
 #endif // DATABASES_DBDELETION_H

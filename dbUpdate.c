@@ -13,9 +13,9 @@ void updateM() {
     gets(updShop.address);
 
     printf("\n\n/   Updated shop:\t/\n");
-    formatShopOutput(updShop);
+    formatShopOutput(&updShop);
 
-    updateShop(updShop);
+    updateShop(&updShop);
   }
 }
 
@@ -31,35 +31,34 @@ void updateS() {
     gets(updEmployee.lastName);
 
     printf("\n\n/   Updated employee:\t/\n");
-    formatEmployeeOutput(updEmployee);
+    formatEmployeeOutput(&updEmployee);
 
-    updateEmployee(updEmployee);
+    updateEmployee(&updEmployee);
   }
 }
 
-void updateShop(shop updShop) {
+void updateShop(const shop *updShop) {
   FILE *shopDataFile = NULL;
   openDbFile(&shopDataFile, shopsData);
-  unsigned long shopAddress = getAddressByKey(updShop.id, shopsData);
+  unsigned long shopAddress = getAddressByKey(updShop->id, shopsData);
   fseek(shopDataFile, (long)shopAddress, SEEK_SET);
   fwrite(&updShop, sizeof(shop), 1, shopDataFile);
   fclose(shopDataFile);
 }
 
-void updateEmployee(employee updEmployee) {
+void updateEmployee(const employee *updEmployee) {
   FILE *employeeDataFile = NULL;
   openDbFile(&employeeDataFile, employeesData);
   unsigned long employeeAddress =
-      getAddressByKey(updEmployee.id, employeesData);
+      getAddressByKey(updEmployee->id, employeesData);
   fseek(employeeDataFile, (long)employeeAddress, SEEK_SET);
   fwrite(&updEmployee, sizeof(employee), 1, employeeDataFile);
   fclose(employeeDataFile);
 }
 
-void updateTrashZone(trashZone updTrashZone) {
+void updateTrashZone(const trashZone *updTrashZone) {
   FILE *trashZoneFile = NULL;
   openDbFile(&trashZoneFile, trashZoneData);
-  unsigned int writtenBytesNum =
-      fwrite(&updTrashZone, sizeof(trashZone), 1, trashZoneFile);
+  fwrite(&updTrashZone, sizeof(trashZone), 1, trashZoneFile);
   fclose(trashZoneFile);
 }

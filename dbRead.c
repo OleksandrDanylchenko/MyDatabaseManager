@@ -12,8 +12,10 @@ shop getM() {
   shop foundedShop = getShopByKey(userKey);
   if (!foundedShop.isActive)
     fprintf(stderr, "\n*** Cannot find record in Shop.fl! ***\n");
-  else
+  else {
+    printf("\n\n/   Founded shop:\t/\n");
     formatShopOutput(foundedShop);
+  }
   return foundedShop;
 }
 
@@ -42,6 +44,7 @@ employee getS() {
             "\n*** Shop on %s doesn't have employee with ID number %d! ***\n",
             mShop.address, userKey);
       else {
+        printf("\n\n/   Founded employee:\t/\n");
         formatEmployeeOutput(employee);
         foundedEmployee = employee;
       }
@@ -58,8 +61,10 @@ void getAll() {
     fread(&outShop, sizeof(shop), 1, outputFile);
     if (feof(outputFile))
       break;
-    if (outShop.isActive)
+    if (outShop.isActive) {
+      printf("\n\n/   Shop:\t/\n");
       formatShopOutput(outShop);
+    }
   }
   fclose(outputFile);
 
@@ -69,22 +74,23 @@ void getAll() {
     fread(&outEmployee, sizeof(employee), 1, outputFile);
     if (feof(outputFile))
       break;
-    formatEmployeeOutput(outEmployee);
+    if(outEmployee.isActive) {
+      printf("\n\n/   Employee:\t/\n");
+      formatEmployeeOutput(outEmployee);
+    }
   }
   fclose(outputFile);
 }
 
 void formatShopOutput(shop outShop) {
-  printf("\n\n/   Founded shop:\t/\n"
-         "/   Id: %d\t\t/\n"
+  printf("/   Id: %d\t\t/\n"
          "/   Address: %s\t/\n"
          "/   EmployeeId: %d\t/\n\n",
          outShop.id, outShop.address, outShop.employeeId);
 }
 
 void formatEmployeeOutput(employee outEmployee) {
-  printf("\n\n/   Founded employee:\t/\n"
-         "/   Id: %d\t\t/\n"
+  printf("/   Id: %d\t\t/\n"
          "/   First name: %s\t/\n"
          "/   Last name: %s\t/\n"
          "/   PrevColleagueId: %d\t/\n"

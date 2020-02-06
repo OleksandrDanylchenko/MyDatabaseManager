@@ -33,26 +33,6 @@ void insertS() {
   }
 }
 
-employee getNewEmployeeRecord(shop mShop) {
-  employee newEmployee = {.id = getRecordsNum(employeesData) + 1,
-                          .prevColleagueId = -1,
-                          .nextColleagueId = mShop.employeeId,
-                          .isActive = true};
-  if (mShop.employeeId != -1) {
-    employee prevEmployee = getEmployeeByKey(mShop.employeeId);
-    prevEmployee.prevColleagueId = newEmployee.id;
-    updateEmployee(prevEmployee);
-  }
-  printf("\\\\ Enter credentials of new employee:\n"
-         "\\\\ First name: ");
-  fflush(stdin);
-  gets(newEmployee.firstName);
-  printf("\\\\ Last name: ");
-  fflush(stdin);
-  gets(newEmployee.lastName);
-  return newEmployee;
-}
-
 bool validateRecordsAmount(dbFiles fileType) {
   if (getRecordsNum(fileType) >= MAX_RECORDS_AMOUNT)
     return false;
@@ -112,6 +92,27 @@ void insertNewShopIndex() {
   fseek(outputFile, 0L, SEEK_END);
   fwrite(&newShopIndex, sizeof(keyIndex), 1, outputFile);
   fclose(outputFile);
+}
+
+employee getNewEmployeeRecord(shop mShop) {
+  employee newEmployee = {.id = getRecordsNum(employeesData) + 1,
+      .prevColleagueId = -1,
+      .nextColleagueId = mShop.employeeId,
+      .shopId = mShop.id,
+      .isActive = true};
+  if (mShop.employeeId != -1) {
+    employee prevEmployee = getEmployeeByKey(mShop.employeeId);
+    prevEmployee.prevColleagueId = newEmployee.id;
+    updateEmployee(prevEmployee);
+  }
+  printf("\\\\ Enter credentials of new employee:\n"
+         "\\\\ First name: ");
+  fflush(stdin);
+  gets(newEmployee.firstName);
+  printf("\\\\ Last name: ");
+  fflush(stdin);
+  gets(newEmployee.lastName);
+  return newEmployee;
 }
 
 void insertNewEmployeeIndex() {

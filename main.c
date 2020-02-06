@@ -37,9 +37,12 @@ int main() {
       insertS();
       break;
     case 9:
-      getAll();
+      countAll();
       break;
     case 10:
+      getAll();
+      break;
+    case 11:
       return 0;
     default:
       continue;
@@ -57,8 +60,9 @@ unsigned int getOption() {
          "*\t6. update-s\t * \n"
          "*\t7. insert-m\t * \n"
          "*\t8. insert-s\t * \n"
-         "*\t9. show-all\t * \n"
-         "*\t10. exit\t * \n"
+         "*\t9. count-all\t * \n"
+         "*\t10. show-all\t * \n"
+         "*\t11. exit\t * \n"
          "**************************\n");
 
   unsigned int opt;
@@ -66,7 +70,7 @@ unsigned int getOption() {
     printf("*\tOpt: ");
     fflush(stdin);
     scanf("%d", &opt); // NOLINT(cert-err34-c)
-  } while (!(opt >= 1 && opt <= 10));
+  } while (!(opt >= 1 && opt <= 11));
 
   return opt;
 }

@@ -10,6 +10,10 @@ employee getS();
 
 void getAll();
 
+void countAll();
+
+int getEmployeesInShop(const shop *mShop);
+
 int getUserKey(dbFiles fileType);
 
 void readIndices(keyIndex *indices, int size, dbFiles fileType);

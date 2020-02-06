@@ -14,7 +14,7 @@ shop getM() {
   if (!foundedShop.isActive)
     fprintf(stderr, "\n*** Cannot find record in Shop.fl! ***\n");
   else {
-    printf("\n\n/   Founded shop:\t/\n");
+    printf("\n/   Founded shop:\t/\n");
     formatShopOutput(&foundedShop);
   }
   return foundedShop;
@@ -45,7 +45,7 @@ employee getS() {
             "\n*** Shop on %s doesn't have employee with ID number %d! ***\n",
             mShop.address, userKey);
       else {
-        printf("\n\n/   Founded employee:\t/\n");
+        printf("\n/   Founded employee:\t/\n");
         formatEmployeeOutput(&employee);
         foundedEmployee = employee;
       }
@@ -63,7 +63,7 @@ void getAll() {
     if (feof(outputFile))
       break;
     if (outShop.isActive) {
-      printf("\n\n/   Shop:\t\t/\n");
+      printf("\n/   Shop:\t\t/\n");
       formatShopOutput(&outShop);
     }
   }
@@ -76,11 +76,39 @@ void getAll() {
     if (feof(outputFile))
       break;
     if (outEmployee.isActive) {
-      printf("\n\n/   Employee:\t\t/\n");
+      printf("\n/   Employee:\t\t/\n");
       formatEmployeeOutput(&outEmployee);
     }
   }
   fclose(outputFile);
+}
+
+void countAll() {
+  printf("\n\\\\   Total amount of shops is: %d\t\\\\\n",
+         getRecordsNum(shopsData));
+  printf("\\\\   Total amount of shops is: %d\t\\\\\n",
+         getRecordsNum(employeesData));
+
+  printf("\n");
+  shop mShop = getM();
+  printf("\\\\   Total amount of employees in shop on %s is: %d\t\\\\\n",
+         mShop.address, getRecordsNum(employeesData));
+}
+
+int getEmployeesInShop(const shop *mShop) {
+  int employeesNum = 0;
+  FILE *employeesFile;
+  openDbFile(&employeesFile, employeesData);
+  employee outEmployee = {.isActive = false};
+  while (true) {
+    fread(&outEmployee, sizeof(employee), 1, employeesFile);
+    if (feof(employeesFile))
+      break;
+    if (outEmployee.isActive && outEmployee.shopId == mShop->id)
+      ++employeesNum;
+  }
+  fclose(employeesFile);
+  return employeesNum;
 }
 
 void formatShopOutput(const shop *outShop) {

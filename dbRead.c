@@ -62,7 +62,7 @@ void getAll() {
     if (feof(outputFile))
       break;
     if (outShop.isActive) {
-      printf("\n\n/   Shop:\t/\n");
+      printf("\n\n/   Shop:\t\t/\n");
       formatShopOutput(outShop);
     }
   }
@@ -75,7 +75,7 @@ void getAll() {
     if (feof(outputFile))
       break;
     if(outEmployee.isActive) {
-      printf("\n\n/   Employee:\t/\n");
+      printf("\n\n/   Employee:\t\t/\n");
       formatEmployeeOutput(outEmployee);
     }
   }
@@ -185,6 +185,12 @@ trashZone getTrashZoneData() {
   FILE *trashZoneFile = NULL;
   openDbFile(&trashZoneFile, trashZoneData);
   fread(&trashZone, sizeof(trashZone), 1, trashZoneFile);
+  fseek (trashZoneFile, 0L, SEEK_END);
+  int fileSize = ftell(trashZoneFile);
+  if (fileSize == 0) {
+    trashZone.shopsAmount = 0;
+    trashZone.employeesAmount = 0;
+  }
   fclose(trashZoneFile);
 
   if (trashZone.shopsAmount == 0)

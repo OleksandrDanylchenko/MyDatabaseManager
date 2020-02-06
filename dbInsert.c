@@ -9,7 +9,7 @@ void insertM() {
   if (!validateRecordsAmount(shopsIndices)) {
     id = getShopTrashKey();
     if (id == -1) {
-      fprintf(stderr, "\nShop.fl cannot store more than 20 records!\n");
+      fprintf(stderr, "\nShop.fl cannot store more than %d records!\n", MAX_RECORDS_AMOUNT);
       return;
     }
   }
@@ -22,7 +22,7 @@ void insertS() {
   if (!validateRecordsAmount(employeesIndices)) {
     id = getEmployeeTrashKey();
     if (id == -1) {
-      fprintf(stderr, "\nEmployee.fl cannot store more than 20 records!\n");
+      fprintf(stderr, "\nEmployee.fl cannot store more than %d records!\n", MAX_RECORDS_AMOUNT);
       return;
     }
   }

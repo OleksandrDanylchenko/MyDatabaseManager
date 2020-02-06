@@ -31,7 +31,6 @@ void writeShopEmployeesInactive(trashZone *trashZone, shop delShop) {
   }
 }
 
-// TODO Testing
 void delS() {
   employee delEmployee = getS();
   delEmployee.isActive = false;
